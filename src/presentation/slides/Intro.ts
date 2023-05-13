@@ -29,14 +29,78 @@ export const introSlide: SlideData = {
           element: (p) =>
             new ImageElement(
               p,
-              { x: '50%', y: '60%' },
+              { x: 300, y: '50%' },
               {
-                image: 'test-alpha',
+                image: 'profile',
                 size: {
-                  w: 100,
-                  h: 100,
+                  w: 400,
+                  h: 400,
                 },
               }
+            ),
+          animation: fadeInAnim,
+          duration: 250,
+        },
+        name: {
+          element: (p) =>
+            new TextElement(
+              p,
+              { x: 530, y: '40%' },
+              {
+                text: 'Ben Feldberg Collins',
+                size: 32,
+                alignment: { h: 'left', v: 'center' },
+              }
+            ),
+          animation: fadeInAnim,
+          duration: 250,
+        },
+        githubText: {
+          element: (p) =>
+            new TextElement(
+              p,
+              { x: 590, y: '50%' },
+              {
+                text: 'benfc1993',
+                size: 32,
+                alignment: { h: 'left', v: 'center' },
+              }
+            ),
+          animation: fadeInAnim,
+          duration: 250,
+          simultaneous: true,
+        },
+        githubLogo: {
+          element: (p) =>
+            new ImageElement(
+              p,
+              { x: 550, y: '50%' },
+              { image: 'gh', size: { w: 50, h: 50 } }
+            ),
+          animation: fadeInAnim,
+          duration: 250,
+        },
+        emailText: {
+          element: (p) =>
+            new TextElement(
+              p,
+              { x: 590, y: '60%' },
+              {
+                text: 'benfeldbergcollins@hotmail.co.uk',
+                size: 32,
+                alignment: { h: 'left', v: 'center' },
+              }
+            ),
+          animation: fadeInAnim,
+          duration: 250,
+          simultaneous: true,
+        },
+        emailLogo: {
+          element: (p) =>
+            new ImageElement(
+              p,
+              { x: 550, y: '60%' },
+              { image: 'gh', size: { w: 50, h: 50 } }
             ),
           animation: fadeInAnim,
           duration: 250,

@@ -110,9 +110,10 @@ export class Slide extends Component {
     if (frame.out) {
       for (const [elementId, transition] of Object.entries(frame.out)) {
         const element = this.elements[elementId]
-        if (!transition.animation)
+        if (!transition.animation) {
           element.setPosition(transition.endPos || element.position())
-        else {
+          element.onAnimatedIn()
+        } else {
           if (transition.simultaneous) {
             transition.animation(
               element,
@@ -152,9 +153,10 @@ export class Slide extends Component {
           this.elements[elementId] = transition.element(this.sketch)
         const element = this.elements[elementId]
 
-        if (!transition.animation)
+        if (!transition.animation) {
           element.setPosition(transition.endPos || element.position())
-        else {
+          element.onAnimatedOut()
+        } else {
           if (transition.simultaneous) {
             transition.animation(
               element,

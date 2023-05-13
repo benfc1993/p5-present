@@ -36,6 +36,7 @@ export class ImageElement extends SlideElement {
   draw(): void {
     this.drawElement(() => {
       this.sketch.tint(255, 255 * this._opacity)
+      this.sketch.rectMode('center')
       this.sketch.image(
         this.image,
         this._position.x - this.data.size.w / 2,

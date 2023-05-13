@@ -1,6 +1,9 @@
 import { linearMoveAnim } from '../../../src/Animations/linearMoveAnim'
 import { TextElement } from '../../../src/Elements/TextElement'
 import { SlideData } from '../../../src/Slide'
+import { AnimationElement } from '../../Elements/AnimationElement'
+import { positionPercentageToPixels } from '../../utils/positionPercentageToPixel'
+import { TaskAnimationElement } from '../animationElements/taskAnimationElement'
 
 export const coverSlide: SlideData = {
   title: 'First slide',
