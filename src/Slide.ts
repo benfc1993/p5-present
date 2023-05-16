@@ -2,7 +2,8 @@ import { Component } from 'p5-typescript'
 import { AnimationFn } from './Animations/types'
 import { SlideElement } from './Elements/SlideElement'
 import { positionPercentageToPixels } from './utils/positionPercentageToPixel'
-import { images } from './loadImages'
+import { images } from './assetInitialisation/loadImages'
+import { ElementGroup } from './Elements/ElementGroup'
 
 export type Position = { x: number | string; y: number | string; rot?: number }
 
@@ -41,7 +42,6 @@ export class Slide extends Component {
 
   constructor(p: p5, data: SlideData) {
     super(p)
-    console.log(data)
     this.background = data.background
     this.frames = data.frames
   }
@@ -115,31 +115,71 @@ export class Slide extends Component {
           element.onAnimatedIn()
         } else {
           if (transition.simultaneous) {
-            transition.animation(
-              element,
-              positionPercentageToPixels(
-                this.sketch,
+            if (element instanceof ElementGroup) {
+              element.elements.forEach((groupElement) =>
+                transition.animation?.(
+                  groupElement,
+                  positionPercentageToPixels(
+                    this.sketch,
+                    transition.startPos || groupElement.position()
+                  ),
+                  positionPercentageToPixels(
+                    this.sketch,
+                    transition.endPos || groupElement.position()
+                  ),
+                  transition.duration || 0,
+                  transition.startPos || groupElement.position()
+                )
+              )
+            } else {
+              transition.animation(
+                element,
+                positionPercentageToPixels(
+                  this.sketch,
+                  transition.startPos || element.position()
+                ),
+                positionPercentageToPixels(
+                  this.sketch,
+                  transition.endPos || element.position()
+                ),
+                transition.duration || 0,
                 transition.startPos || element.position()
-              ),
-              positionPercentageToPixels(
-                this.sketch,
-                transition.endPos || element.position()
-              ),
-              transition.duration || 0
-            )
+              )
+            }
           } else {
-            await transition.animation(
-              element,
-              positionPercentageToPixels(
-                this.sketch,
+            if (element instanceof ElementGroup) {
+              await Promise.all(
+                element.elements.map((groupElement) =>
+                  transition.animation?.(
+                    groupElement,
+                    positionPercentageToPixels(
+                      this.sketch,
+                      transition.startPos || groupElement.position()
+                    ),
+                    positionPercentageToPixels(
+                      this.sketch,
+                      transition.endPos || groupElement.position()
+                    ),
+                    transition.duration || 0,
+                    transition.startPos || groupElement.position()
+                  )
+                )
+              )
+            } else {
+              await transition.animation(
+                element,
+                positionPercentageToPixels(
+                  this.sketch,
+                  transition.startPos || element.position()
+                ),
+                positionPercentageToPixels(
+                  this.sketch,
+                  transition.endPos || element.position()
+                ),
+                transition.duration || 0,
                 transition.startPos || element.position()
-              ),
-              positionPercentageToPixels(
-                this.sketch,
-                transition.endPos || element.position()
-              ),
-              transition.duration || 0
-            )
+              )
+            }
           }
         }
 
@@ -158,31 +198,71 @@ export class Slide extends Component {
           element.onAnimatedOut()
         } else {
           if (transition.simultaneous) {
-            transition.animation(
-              element,
-              positionPercentageToPixels(
-                this.sketch,
-                transition.startPos || element.position()
-              ),
-              positionPercentageToPixels(
-                this.sketch,
+            if (element instanceof ElementGroup) {
+              element.elements.map((groupElement) =>
+                transition.animation?.(
+                  groupElement,
+                  positionPercentageToPixels(
+                    this.sketch,
+                    transition.startPos || groupElement.position()
+                  ),
+                  positionPercentageToPixels(
+                    this.sketch,
+                    transition.endPos || groupElement.position()
+                  ),
+                  transition.duration || 0,
+                  transition.endPos || groupElement.position()
+                )
+              )
+            } else {
+              transition.animation(
+                element,
+                positionPercentageToPixels(
+                  this.sketch,
+                  transition.startPos || element.position()
+                ),
+                positionPercentageToPixels(
+                  this.sketch,
+                  transition.endPos || element.position()
+                ),
+                transition.duration || 0,
                 transition.endPos || element.position()
-              ),
-              transition.duration || 0
-            )
+              )
+            }
           } else {
-            await transition.animation(
-              element,
-              positionPercentageToPixels(
-                this.sketch,
-                transition.startPos || element.position()
-              ),
-              positionPercentageToPixels(
-                this.sketch,
+            if (element instanceof ElementGroup) {
+              await Promise.all(
+                element.elements.map((groupElement) =>
+                  transition.animation?.(
+                    groupElement,
+                    positionPercentageToPixels(
+                      this.sketch,
+                      transition.startPos || groupElement.position()
+                    ),
+                    positionPercentageToPixels(
+                      this.sketch,
+                      transition.endPos || groupElement.position()
+                    ),
+                    transition.duration || 0,
+                    transition.endPos || groupElement.position()
+                  )
+                )
+              )
+            } else {
+              await transition.animation(
+                element,
+                positionPercentageToPixels(
+                  this.sketch,
+                  transition.startPos || element.position()
+                ),
+                positionPercentageToPixels(
+                  this.sketch,
+                  transition.endPos || element.position()
+                ),
+                transition.duration || 0,
                 transition.endPos || element.position()
-              ),
-              transition.duration || 0
-            )
+              )
+            }
           }
         }
         element.onAnimatedIn()

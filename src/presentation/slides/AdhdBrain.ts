@@ -1,41 +1,154 @@
 import { fadeInAnim } from '../../Animations/fadeInAnim'
+import { fadeOutAnim } from '../../Animations/fadeOutAnim'
+import { ElementGroup } from '../../Elements/ElementGroup'
+import { ImageElement } from '../../Elements/ImageElement'
+import { RectElement } from '../../Elements/RectElement'
 import { TextElement } from '../../Elements/TextElement'
 import { SlideData } from '../../Slide'
-import { positionPercentageToPixels } from '../../utils/positionPercentageToPixel'
-import { TaskAnimationElement } from '../animationElements/taskAnimationElement'
+import { bulletPoints } from '../bulletPoints'
+import { mainTextFontSize } from '../presentationData'
+import { mainSlide } from './templates/main'
 
-export const AdhdBrain: SlideData = {
-  title: 'ADHD brain',
-  background: 'intro-bg',
-  frames: [
+export const AdhdBrain: SlideData = mainSlide(
+  'Brains',
+  [
     {
       in: {
-        title: {
+        table: {
           element: (p) =>
-            new TextElement(
+            new ElementGroup(p, { x: '50%', y: '35%' }, [
+              new RectElement(
+                p,
+                { x: 0, y: 0 },
+                {
+                  color: [255, 255, 255],
+                  size: {
+                    w: '90%',
+                    h: 4,
+                  },
+                }
+              ),
+              new RectElement(
+                p,
+                { x: 0, y: '20%' },
+                {
+                  color: [255, 255, 255],
+                  size: {
+                    w: 4,
+                    h: '60%',
+                  },
+                }
+              ),
+              new RectElement(
+                p,
+                { x: 0, y: 0 },
+                {
+                  color: [55, 71, 79],
+                  size: {
+                    w: 40,
+                    h: 40,
+                  },
+                }
+              ),
+              new RectElement(
+                p,
+                { x: 0, y: 0 },
+                {
+                  color: [255, 255, 255],
+                  size: {
+                    w: 10,
+                    h: 10,
+                  },
+                }
+              ),
+              new TextElement(
+                p,
+                { x: '-25%', y: -20 },
+                {
+                  text: 'Neurotypical',
+                  size: mainTextFontSize,
+                  alignment: {
+                    h: 'center',
+                  },
+                }
+              ),
+              new TextElement(
+                p,
+                { x: '25%', y: -20 },
+                {
+                  text: 'ADHD',
+                  size: mainTextFontSize,
+                  alignment: {
+                    h: 'center',
+                  },
+                }
+              ),
+            ]),
+          animation: fadeInAnim,
+          duration: 200,
+        },
+      },
+    },
+    ...bulletPoints(
+      'neuro',
+      [
+        'Able to ignore external stimuli',
+        'Motivation to take a task to completion',
+        'Well-regulated dopamine production',
+        'Good working memory',
+      ],
+      { x: '6.5%', y: '45%' },
+      { size: 40 },
+      {
+        animation: fadeInAnim,
+        duration: 200,
+      }
+    ),
+    ...bulletPoints(
+      'adhdT',
+      [
+        'Always receiving external stimuli',
+        "Tendency to reach '80%' completion",
+      ],
+      { x: '53%', y: '45%' },
+      { size: 40 },
+      {
+        animation: fadeInAnim,
+        duration: 200,
+      }
+    ),
+    {
+      in: {
+        kitchenImage: {
+          element: (p: p5) =>
+            new ImageElement(
               p,
-              { x: '50%', y: '25%' },
-              {
-                text: 'The ADHD brain',
-                size: 36,
-                alignment: { v: 'center', h: 'center' },
-              }
+              { x: '50%', y: '50%' },
+              { image: 'kitchen', size: { w: '80%' } }
             ),
+          animation: fadeInAnim,
+          duration: 200,
         },
       },
     },
     {
-      in: {
-        animation: {
-          animation: fadeInAnim,
-          duration: 500,
-          element: (p: p5) =>
-            new TaskAnimationElement(
-              p,
-              positionPercentageToPixels(p, { x: '50%', y: '50%' })
-            ),
+      out: {
+        kitchenImage: {
+          animation: fadeOutAnim,
+          duration: 200,
         },
       },
     },
+    ...bulletPoints(
+      'adhdB',
+      ['Deficient dopamine production', 'Poor working memory'],
+      { x: '53%', y: '45% + 120' },
+      { size: 40 },
+      {
+        animation: fadeInAnim,
+        duration: 200,
+      }
+    ),
   ],
-}
+  true
+)

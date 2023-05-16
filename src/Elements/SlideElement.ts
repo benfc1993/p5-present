@@ -6,26 +6,32 @@ import { PixelPosition } from '../Animations/types'
 import { deepCopy } from '../utils/deepCopy'
 
 export class SlideElement extends Component {
-  protected _position: PixelPosition
+  protected _position: Position = { x: 0, y: 0 }
+  get pixelPosition(): PixelPosition {
+    const { x, y } = positionPercentageToPixels(this.sketch, this._position)
+
+    return { x, y, rot: this._position.rot }
+  }
+
   protected _opacity: number = 1
   protected _state: Partial<SlideElement>[] = []
 
   constructor(p: p5, position: Position) {
     super(p)
-    const { x, y } = positionPercentageToPixels(p, position)
-    this._position = { x, y, rot: position.rot }
+    this._position = position
   }
 
   draw() {}
 
   drawElement(drawFn: () => void) {
     this.sketch.push()
-    if (this._position.rot) {
+    if (this.pixelPosition.rot) {
       this.sketch.angleMode('degrees')
-      this.sketch.translate(this._position.x, this._position.y)
-      this.sketch.rotate(this._position.rot)
-      this.sketch.translate(-this._position.x, -this._position.y)
+      this.sketch.translate(this.pixelPosition.x, this.pixelPosition.y)
+      this.sketch.rotate(this.pixelPosition.rot)
+      this.sketch.translate(-this.pixelPosition.x, -this.pixelPosition.y)
     }
+
     drawFn()
     this.sketch.pop()
   }
@@ -43,8 +49,7 @@ export class SlideElement extends Component {
   }
 
   public setPosition(pos: Position) {
-    const { x, y } = positionPercentageToPixels(this.sketch, pos)
-    this._position = { ...pos, ...this._position, x, y }
+    this._position = pos
   }
 
   public opacity() {

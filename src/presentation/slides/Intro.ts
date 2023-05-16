@@ -1,22 +1,25 @@
 import { fadeInAnim } from '../../../src/Animations/fadeInAnim'
 import { ImageElement } from '../../../src/Elements/ImageElement'
-import { TextElement } from '../../../src/Elements/TextElement'
+import { TextElement, TitleElement } from '../../../src/Elements/TextElement'
 import { SlideData } from '../../../src/Slide'
+import { fadeOutAnim } from '../../Animations/fadeOutAnim'
+import { RectElement } from '../../Elements/RectElement'
+import { mainTextFontSize, titleFontSize } from '../presentationData'
 
 export const introSlide: SlideData = {
   title: 'Introduction',
-  background: 'intro-bg',
+  background: [55, 71, 79],
   frames: [
     {
       in: {
         title: {
           element: (p) =>
-            new TextElement(
+            new TitleElement(
               p,
-              { x: '50%', y: '25%' },
+              { x: '50%', y: '15%' },
               {
                 text: 'Who am I?',
-                size: 36,
+                size: titleFontSize,
                 alignment: { v: 'center', h: 'center' },
               }
             ),
@@ -25,85 +28,275 @@ export const introSlide: SlideData = {
     },
     {
       in: {
-        image: {
-          element: (p) =>
-            new ImageElement(
-              p,
-              { x: 300, y: '50%' },
-              {
-                image: 'profile',
-                size: {
-                  w: 400,
-                  h: 400,
-                },
-              }
-            ),
-          animation: fadeInAnim,
-          duration: 250,
-        },
         name: {
           element: (p) =>
             new TextElement(
               p,
-              { x: 530, y: '40%' },
+              { x: '50%', y: '28%' },
               {
                 text: 'Ben Feldberg Collins',
-                size: 32,
-                alignment: { h: 'left', v: 'center' },
+                size: mainTextFontSize,
+                alignment: { h: 'center', v: 'center' },
               }
             ),
           animation: fadeInAnim,
-          duration: 250,
+          duration: 200,
         },
         githubText: {
           element: (p) =>
             new TextElement(
               p,
-              { x: 590, y: '50%' },
+              { x: '48%', y: '95%' },
               {
                 text: 'benfc1993',
-                size: 32,
+                size: mainTextFontSize,
                 alignment: { h: 'left', v: 'center' },
               }
             ),
           animation: fadeInAnim,
-          duration: 250,
+          duration: 200,
           simultaneous: true,
         },
         githubLogo: {
           element: (p) =>
-            new ImageElement(
-              p,
-              { x: 550, y: '50%' },
-              { image: 'gh', size: { w: 50, h: 50 } }
-            ),
+            new ImageElement(p, { x: '45.5%', y: '95%' }, { image: 'gh' }),
           animation: fadeInAnim,
-          duration: 250,
+          duration: 200,
         },
-        emailText: {
+      },
+    },
+    {
+      in: {
+        childhood: {
           element: (p) =>
             new TextElement(
               p,
-              { x: 590, y: '60%' },
+              { x: '10%', y: '38%', rot: -16 },
               {
-                text: 'benfeldbergcollins@hotmail.co.uk',
-                size: 32,
+                text: ['Stuntman', 'Mechanic', 'Spy'],
+                size: mainTextFontSize,
+                alignment: { h: 'left', v: 'center' },
+                lineHeight: 1.5,
+              }
+            ),
+          animation: fadeInAnim,
+          duration: 200,
+        },
+      },
+    },
+    {
+      in: {
+        doctor: {
+          element: (p) =>
+            new TextElement(
+              p,
+              { x: '27%', y: '44%', rot: 10 },
+              {
+                text: 'Doctor',
+                size: mainTextFontSize,
                 alignment: { h: 'left', v: 'center' },
               }
             ),
           animation: fadeInAnim,
-          duration: 250,
-          simultaneous: true,
+          duration: 50,
         },
-        emailLogo: {
+      },
+    },
+    {
+      in: {
+        engineer: {
           element: (p) =>
-            new ImageElement(
+            new TextElement(
               p,
-              { x: 550, y: '60%' },
-              { image: 'gh', size: { w: 50, h: 50 } }
+              { x: '32.5%', y: '50%', rot: -13 },
+              {
+                text: 'Engineer',
+                size: mainTextFontSize,
+                alignment: { h: 'left', v: 'center' },
+              }
             ),
           animation: fadeInAnim,
-          duration: 250,
+          duration: 50,
+        },
+      },
+    },
+    {
+      in: {
+        dj: {
+          element: (p) =>
+            new TextElement(
+              p,
+              { x: '29%', y: '54%', rot: 17 },
+              {
+                text: 'DJ',
+                size: mainTextFontSize,
+                alignment: { h: 'left', v: 'center' },
+              }
+            ),
+          animation: fadeInAnim,
+          duration: 50,
+        },
+      },
+    },
+    {
+      in: {
+        eventmanager: {
+          element: (p) =>
+            new TextElement(
+              p,
+              { x: '33.6%', y: '55%', rot: 7 },
+              {
+                text: 'EventManager',
+                size: mainTextFontSize,
+                alignment: { h: 'left', v: 'center' },
+              }
+            ),
+          animation: fadeInAnim,
+          duration: 50,
+        },
+      },
+    },
+    {
+      in: {
+        snowboard: {
+          element: (p) =>
+            new TextElement(
+              p,
+              { x: '22.6%', y: '61%', rot: 5 },
+              {
+                text: 'Snowboard Instructor',
+                size: mainTextFontSize,
+                alignment: { h: 'left', v: 'center' },
+              }
+            ),
+          animation: fadeInAnim,
+          duration: 50,
+        },
+      },
+    },
+    {
+      out: {
+        snowboard: {
+          animation: fadeOutAnim,
+          duration: 50,
+        },
+      },
+      in: {
+        ski: {
+          element: (p) =>
+            new TextElement(
+              p,
+              { x: '22.6%', y: '61%', rot: 5 },
+              {
+                text: 'Ski and Snowboard Instructor',
+                size: mainTextFontSize,
+                alignment: { h: 'left', v: 'center' },
+              }
+            ),
+          animation: fadeInAnim,
+          duration: 50,
+        },
+      },
+    },
+    {
+      in: {
+        frontEnd: {
+          element: (p) =>
+            new TextElement(
+              p,
+              { x: '43.6%', y: '50%', rot: 6.5 },
+              {
+                text: 'Frontend Developer',
+                size: mainTextFontSize,
+                alignment: { h: 'left', v: 'center' },
+              }
+            ),
+          animation: fadeInAnim,
+          duration: 50,
+        },
+      },
+    },
+    {
+      in: {
+        hod: {
+          element: (p) =>
+            new TextElement(
+              p,
+              { x: '52.6%', y: '62%', rot: -4.5 },
+              {
+                text: 'Head of Department',
+                size: mainTextFontSize,
+                alignment: { h: 'left', v: 'center' },
+              }
+            ),
+          animation: fadeInAnim,
+          duration: 50,
+        },
+      },
+    },
+    {
+      in: {
+        fullStack: {
+          element: (p) =>
+            new TextElement(
+              p,
+              { x: '52.6%', y: '42%', rot: 3.5 },
+              {
+                text: 'Full stack software engineer',
+                size: mainTextFontSize,
+                alignment: { h: 'left', v: 'center' },
+              }
+            ),
+          animation: fadeInAnim,
+          duration: 50,
+        },
+      },
+    },
+    {
+      in: {
+        instructor: {
+          element: (p) =>
+            new TextElement(
+              p,
+              { x: '62.6%', y: '67%', rot: 3.5 },
+              {
+                text: 'Instructor',
+                size: mainTextFontSize,
+                alignment: { h: 'left', v: 'center' },
+              }
+            ),
+          animation: fadeInAnim,
+          duration: 50,
+        },
+      },
+    },
+    {
+      in: {
+        rect: {
+          element: (p) =>
+            new RectElement(
+              p,
+              { x: '50%', y: '55%' },
+              { color: [0, 0, 0, 187], size: { w: '30%', h: '19.5%' } }
+            ),
+          animation: fadeInAnim,
+          duration: 500,
+          simultaneous: true,
+        },
+        adhd: {
+          element: (p) =>
+            new TextElement(
+              p,
+              { x: '50%', y: '55%' },
+              {
+                text: 'ADHD',
+                size: 150,
+                color: [62, 217, 181],
+                alignment: { h: 'center', v: 'center' },
+              }
+            ),
+          animation: fadeInAnim,
+          duration: 500,
         },
       },
     },

@@ -1,38 +1,51 @@
 import { linearMoveAnim } from '../../../src/Animations/linearMoveAnim'
-import { TextElement } from '../../../src/Elements/TextElement'
+import { TextElement, TitleElement } from '../../../src/Elements/TextElement'
 import { SlideData } from '../../../src/Slide'
-import { AnimationElement } from '../../Elements/AnimationElement'
-import { positionPercentageToPixels } from '../../utils/positionPercentageToPixel'
-import { TaskAnimationElement } from '../animationElements/taskAnimationElement'
+import { fadeOutAnim } from '../../Animations/fadeOutAnim'
+import { mainTextFontSize, titleFontSize } from '../presentationData'
+import { slideBackground } from './templates/baseSlide'
 
 export const coverSlide: SlideData = {
   title: 'First slide',
-  background: 'intro-bg',
+  background: slideBackground,
   frames: [
     {
       in: {
         title: {
           element: (p: p5) =>
-            new TextElement(
+            new TitleElement(
               p,
-              { x: '50%', y: '45%' },
+              { x: '50%', y: '50% + -60' },
               {
-                text: 'MancJs',
+                text: 'Alarms, diagrams, side-quests',
                 alignment: { h: 'center', v: 'center' },
-                size: 46,
+                size: titleFontSize,
               }
             ),
           simultaneous: true,
         },
-        text: {
+        divider: {
+          element: (p: p5) =>
+            new TitleElement(
+              p,
+              { x: '50%', y: '50%' },
+              {
+                text: '...',
+                alignment: { h: 'center', v: 'center' },
+                size: titleFontSize,
+              }
+            ),
+          simultaneous: true,
+        },
+        subTitle: {
           element: (p: p5) =>
             new TextElement(
               p,
-              { x: '50%', y: '55%' },
+              { x: '50%', y: '50% + 106' },
               {
-                text: 'Alarms, diagrams, side-quests and other lessons from having ADHD in tech',
+                text: 'and other lessons from having ADHD in tech',
                 alignment: { h: 'center', v: 'center' },
-                size: 34,
+                size: mainTextFontSize,
               }
             ),
         },
@@ -42,15 +55,18 @@ export const coverSlide: SlideData = {
     {
       out: {
         title: {
-          animation: linearMoveAnim,
-          duration: 250,
-          endPos: { x: '50%', y: -20 },
+          animation: fadeOutAnim,
+          duration: 200,
           simultaneous: true,
         },
-        text: {
-          animation: linearMoveAnim,
-          duration: 250,
-          endPos: { x: '50%', y: '110%' },
+        divider: {
+          animation: fadeOutAnim,
+          duration: 200,
+          simultaneous: true,
+        },
+        subTitle: {
+          animation: fadeOutAnim,
+          duration: 200,
         },
       },
     },

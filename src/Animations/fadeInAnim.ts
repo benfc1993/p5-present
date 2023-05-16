@@ -1,11 +1,13 @@
 import { SlideElement } from '../Elements/SlideElement'
+import { Position } from '../Slide'
 import { AnimationFn, PixelPosition } from './types'
 
 export const fadeInAnim: AnimationFn = (
   el: SlideElement,
   startPos: PixelPosition,
-  endPos: PixelPosition,
-  duration: number
+  endPixelPos: PixelPosition,
+  duration: number,
+  endPos: Position
 ) => {
   return new Promise((resolve) => {
     el.setPosition(endPos)

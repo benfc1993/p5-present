@@ -12,8 +12,9 @@ export class Presentation extends Component {
     super(p)
   }
 
-  load(p: import('p5')): void {
+  async load(p: import('p5')): Promise<void> {
     inputManager.subscribeToKeyDown(this.next.bind(this))
+    inputManager.subscribeToClick(this.onClick.bind(this))
     this.slides = presentationData.slides.map((slide) => new Slide(p, slide))
     this.slides.push(
       new Slide(p, { background: [0, 0, 0], frames: [{}], title: 'End slide' })
@@ -26,18 +27,38 @@ export class Presentation extends Component {
     }
   }
 
+  onClick = (e: MouseEvent) => {
+    switch (e.button) {
+      case 0:
+        if (this.currentSlide === this.slides.length - 1) return
+        this.slides[this.currentSlide].nextFrame()
+        break
+      case 1:
+        this.slides[this.currentSlide].lastFrame()
+        break
+    }
+  }
+
   next = (e: KeyboardEvent) => {
     switch (e.code) {
       case 'ArrowRight':
+        if (this.currentSlide === this.slides.length - 1) return
         this.slides[this.currentSlide].nextFrame()
         break
       case 'ArrowLeft':
+        if (
+          this.currentSlide === 0 &&
+          this.slides[this.currentSlide].currentFrame === 0
+        )
+          return
         this.slides[this.currentSlide].lastFrame()
         break
       case 'ArrowUp':
+        if (this.currentSlide === this.slides.length - 1) return
         this.slides[this.currentSlide].onEnd(1)
         break
       case 'ArrowDown':
+        if (this.currentSlide === 0) return
         this.slides[this.currentSlide].onEnd(-1)
         break
     }

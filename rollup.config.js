@@ -39,26 +39,11 @@ export default {
       module: 'es6',
       moduleResolution: 'node',
       target: 'es6',
-      sourceMap: true,
+      ...(process.env.ENVIRONMENT === 'DEV' && { sourceMap: true }),
       resolveJsonModule: true,
     }),
     nodePolyfills(),
     json(),
-
-    // babel({
-    // 	exclude: 'node_modules/**'
-    // }),
-    // browserify,
-    // builtins({ crypto: false, fs: false }),
-    // swc(
-    // 	defineRollupSwcOption({
-    // 		sourceMaps: true,
-    // 		include: ,
-    // 		module: {
-    // 			type: 'nodenext'
-    // 		}
-    // 	})
-    // ),
     ...devPlugins,
   ],
   // globals: ['crypto', 'fs'],

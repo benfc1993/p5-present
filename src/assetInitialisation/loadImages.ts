@@ -1,4 +1,4 @@
-import filesList from './filesList.json'
+import filesList from '../imagesList.json'
 
 export const images: Record<string, p5.Image> = {}
 
