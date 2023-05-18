@@ -12,7 +12,6 @@ export class TaskAnimationElement extends AnimationElement {
   }
 
   onAnimatedIn(): void {
-    console.log('Animated on animated in')
     this.animation.play()
   }
   draw(): void {

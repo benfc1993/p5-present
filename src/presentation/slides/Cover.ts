@@ -2,7 +2,7 @@ import { linearMoveAnim } from '../../../src/Animations/linearMoveAnim'
 import { TextElement, TitleElement } from '../../../src/Elements/TextElement'
 import { SlideData } from '../../../src/Slide'
 import { fadeOutAnim } from '../../Animations/fadeOutAnim'
-import { mainTextFontSize, titleFontSize } from '../presentationData'
+import { mainTextFontSize, titleFontSize } from '../utils'
 import { slideBackground } from './templates/baseSlide'
 
 export const coverSlide: SlideData = {
@@ -48,25 +48,6 @@ export const coverSlide: SlideData = {
                 size: mainTextFontSize,
               }
             ),
-        },
-      },
-    },
-
-    {
-      out: {
-        title: {
-          animation: fadeOutAnim,
-          duration: 200,
-          simultaneous: true,
-        },
-        divider: {
-          animation: fadeOutAnim,
-          duration: 200,
-          simultaneous: true,
-        },
-        subTitle: {
-          animation: fadeOutAnim,
-          duration: 200,
         },
       },
     },

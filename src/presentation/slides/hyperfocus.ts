@@ -1,6 +1,7 @@
 import { fadeInAnim } from '../../Animations/fadeInAnim'
 import { SlideData } from '../../Slide'
 import { bulletPoints } from '../bulletPoints'
+import { mainTextFontSize } from '../utils'
 import { mainSlide } from './templates/main'
 
 export const hyperfocus: SlideData = mainSlide(
@@ -16,7 +17,7 @@ export const hyperfocus: SlideData = mainSlide(
         'Check in with requirements',
       ],
       { x: '25%', y: '45%' },
-      { size: 46 },
+      { size: mainTextFontSize },
       {
         animation: fadeInAnim,
         duration: 200,

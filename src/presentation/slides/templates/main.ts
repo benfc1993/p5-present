@@ -2,7 +2,7 @@ import { ElementGroup } from '../../../Elements/ElementGroup'
 import { RectElement } from '../../../Elements/RectElement'
 import { TitleElement } from '../../../Elements/TextElement'
 import { Frame, SlideData } from '../../../Slide'
-import { titleFontSize } from '../../presentationData'
+import { titleFontSize } from '../../utils'
 import { slideBackground } from './baseSlide'
 
 export const mainSlide = (
@@ -25,13 +25,13 @@ export const mainSlide = (
               ),
               new RectElement(
                 p,
-                { x: '5% + 200', y: '15%' },
+                { x: '5% +200', y: '15%' },
                 { color: [62, 217, 181], size: { w: 400, h: 4 } }
               ),
               new TitleElement(
                 p,
                 { x: '6%', y: '15%' },
-                { text: title, size: titleFontSize }
+                { text: title, size: titleFontSize - 15 }
               ),
             ]),
           simultaneous: true,

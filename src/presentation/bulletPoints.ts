@@ -41,8 +41,8 @@ const createYpos = (
   size: number = 14
 ): string | number => {
   if (typeof y === 'string') {
-    return y + ` + ${((size || 14) + 20) * index}`
+    return y + ` + ${((size || 14) + size / 2) * index}`
   } else {
-    return (y as number) + ((size || 14) + 20) * index
+    return (y as number) + ((size || 14) + size / 2) * index
   }
 }

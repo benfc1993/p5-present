@@ -5,7 +5,7 @@ import { ImageElement } from '../../Elements/ImageElement'
 import { RectElement } from '../../Elements/RectElement'
 import { TitleElement } from '../../Elements/TextElement'
 import { SlideData } from '../../Slide'
-import { titleFontSize } from '../presentationData'
+import { titleFontSize } from '../utils'
 import { mainSlide } from './templates/main'
 
 export const elephant: SlideData = mainSlide(
@@ -63,7 +63,7 @@ export const elephant: SlideData = mainSlide(
         },
         stack: {
           element: (p: p5) =>
-            new ElementGroup(p, { x: '10%', y: '30%' }, [
+            new ElementGroup(p, { x: '10%', y: '26%' }, [
               new RectElement(
                 p,
                 { x: 0, y: 20 },
@@ -74,7 +74,8 @@ export const elephant: SlideData = mainSlide(
                   },
                   color: [255, 217, 102],
                   radius: 20,
-                }
+                },
+                true
               ),
               new RectElement(
                 p,
@@ -86,7 +87,8 @@ export const elephant: SlideData = mainSlide(
                   },
                   color: [224, 102, 102],
                   radius: 20,
-                }
+                },
+                true
               ),
               new RectElement(
                 p,
@@ -98,7 +100,8 @@ export const elephant: SlideData = mainSlide(
                   },
                   color: [62, 217, 181],
                   radius: 20,
-                }
+                },
+                true
               ),
               new RectElement(
                 p,
@@ -110,7 +113,8 @@ export const elephant: SlideData = mainSlide(
                   },
                   color: [111, 168, 220],
                   radius: 20,
-                }
+                },
+                true
               ),
               new RectElement(
                 p,
@@ -122,7 +126,8 @@ export const elephant: SlideData = mainSlide(
                   },
                   color: [225, 153, 0],
                   radius: 20,
-                }
+                },
+                true
               ),
             ]),
           animation: fadeInAnim,

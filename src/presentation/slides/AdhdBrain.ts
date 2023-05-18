@@ -6,7 +6,7 @@ import { RectElement } from '../../Elements/RectElement'
 import { TextElement } from '../../Elements/TextElement'
 import { SlideData } from '../../Slide'
 import { bulletPoints } from '../bulletPoints'
-import { mainTextFontSize } from '../presentationData'
+import { mainTextFontSize } from '../utils'
 import { mainSlide } from './templates/main'
 
 export const AdhdBrain: SlideData = mainSlide(
@@ -98,7 +98,7 @@ export const AdhdBrain: SlideData = mainSlide(
         'Good working memory',
       ],
       { x: '6.5%', y: '45%' },
-      { size: 40 },
+      { size: mainTextFontSize - 10 },
       {
         animation: fadeInAnim,
         duration: 200,
@@ -111,7 +111,7 @@ export const AdhdBrain: SlideData = mainSlide(
         "Tendency to reach '80%' completion",
       ],
       { x: '53%', y: '45%' },
-      { size: 40 },
+      { size: mainTextFontSize - 10 },
       {
         animation: fadeInAnim,
         duration: 200,
@@ -142,8 +142,8 @@ export const AdhdBrain: SlideData = mainSlide(
     ...bulletPoints(
       'adhdB',
       ['Deficient dopamine production', 'Poor working memory'],
-      { x: '53%', y: '45% + 120' },
-      { size: 40 },
+      { x: '53%', y: `45% + ${(mainTextFontSize - 10) * 3}` },
+      { size: mainTextFontSize - 10 },
       {
         animation: fadeInAnim,
         duration: 200,

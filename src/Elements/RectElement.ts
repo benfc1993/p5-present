@@ -1,7 +1,8 @@
 import p5 from 'p5'
 import { Position } from '../Slide'
 import { SlideElement } from './SlideElement'
-import { positionPercentageToPixels } from '../utils/positionPercentageToPixel'
+import { sizePercentageToPixels } from '../utils/positionPercentageToPixel'
+import { referenceScale } from '../Presentation'
 
 type RectElementData = {
   size: {
@@ -16,12 +17,19 @@ export class RectElement extends SlideElement {
   private data: RectElementData
   alpha: number = 1
   radius: [number, number, number, number]
+  capSize: boolean = false
 
-  constructor(p: p5, position: Position, data: RectElementData) {
+  constructor(
+    p: p5,
+    position: Position,
+    data: RectElementData,
+    capSize = false
+  ) {
     super(p, position)
     this.data = data
     this.alpha = data.color[3] / 255 || 1
     this.radius = this.setRadius(data.radius)
+    this.capSize = capSize
     this.addState()
   }
 
@@ -32,10 +40,7 @@ export class RectElement extends SlideElement {
       this.sketch.noStroke()
       this.sketch.fill(this.data.color)
       this.sketch.rectMode('center')
-      const { x, y } = positionPercentageToPixels(this.sketch, {
-        x: this.data.size.w,
-        y: this.data.size.h,
-      })
+      const { x, y } = this.rectSize()
       this.sketch.rect(
         this.pixelPosition.x,
         this.pixelPosition.y,
@@ -45,6 +50,27 @@ export class RectElement extends SlideElement {
       )
       this.sketch.pop()
     })
+  }
+  rectSize(): { x: number; y: number } {
+    if (
+      typeof this.data.size.w === 'string' ||
+      typeof this.data.size.h === 'string'
+    ) {
+      return sizePercentageToPixels(this.sketch, {
+        x: this.data.size.w,
+        y: this.data.size.h,
+      })
+    }
+
+    const scaledWidth =
+      this.data.size.w * (this.sketch.width / referenceScale.w)
+    const scaledHeight =
+      this.data.size.h * (this.sketch.width / referenceScale.w)
+
+    return {
+      x: this.capSize ? Math.min(scaledWidth, this.data.size.w) : scaledWidth,
+      y: this.capSize ? Math.min(scaledHeight, this.data.size.h) : scaledHeight,
+    }
   }
 
   onAnimatedIn() {

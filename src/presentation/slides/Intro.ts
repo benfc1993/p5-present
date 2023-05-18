@@ -4,7 +4,7 @@ import { TextElement, TitleElement } from '../../../src/Elements/TextElement'
 import { SlideData } from '../../../src/Slide'
 import { fadeOutAnim } from '../../Animations/fadeOutAnim'
 import { RectElement } from '../../Elements/RectElement'
-import { mainTextFontSize, titleFontSize } from '../presentationData'
+import { mainTextFontSize, titleFontSize } from '../utils'
 
 export const introSlide: SlideData = {
   title: 'Introduction',
@@ -23,6 +23,7 @@ export const introSlide: SlideData = {
                 alignment: { v: 'center', h: 'center' },
               }
             ),
+          simultaneous: true,
         },
       },
     },

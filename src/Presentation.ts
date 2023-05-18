@@ -3,6 +3,11 @@ import { inputManager } from './Input'
 import { Slide } from './Slide'
 import { presentationData } from './presentation/presentationData'
 
+export const referenceScale = {
+  w: 1920,
+  h: 1080,
+}
+
 export class Presentation extends Component {
   started: boolean = false
   slides: Slide[] = []

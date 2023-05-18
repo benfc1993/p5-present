@@ -6,7 +6,7 @@ import { SlideElement } from '../../Elements/SlideElement'
 import { TitleElement } from '../../Elements/TextElement'
 import { SlideData } from '../../Slide'
 import { bulletPoints } from '../bulletPoints'
-import { mainTextFontSize, titleFontSize } from '../presentationData'
+import { mainTextFontSize, titleFontSize } from '../utils'
 import { slideBackground } from './templates/baseSlide'
 import { mainSlide } from './templates/main'
 
@@ -25,7 +25,7 @@ export const elephantSmall: SlideData = mainSlide(
         },
         slicedStack: {
           element: (p: p5) =>
-            new ElementGroup(p, { x: '10%', y: '30%' }, [
+            new ElementGroup(p, { x: '10%', y: '26%' }, [
               new RectElement(
                 p,
                 { x: 0, y: 20 },
@@ -36,7 +36,8 @@ export const elephantSmall: SlideData = mainSlide(
                   },
                   color: [255, 217, 102],
                   radius: 20,
-                }
+                },
+                true
               ),
               ...createSlices(p, -20),
               new RectElement(
@@ -49,7 +50,8 @@ export const elephantSmall: SlideData = mainSlide(
                   },
                   color: [224, 102, 102],
                   radius: 20,
-                }
+                },
+                true
               ),
               ...createSlices(p, 125),
               new RectElement(
@@ -62,7 +64,8 @@ export const elephantSmall: SlideData = mainSlide(
                   },
                   color: [62, 217, 181],
                   radius: 20,
-                }
+                },
+                true
               ),
               ...createSlices(p, 270),
               new RectElement(
@@ -75,7 +78,8 @@ export const elephantSmall: SlideData = mainSlide(
                   },
                   color: [111, 168, 220],
                   radius: 20,
-                }
+                },
+                true
               ),
               ...createSlices(p, 415),
               new RectElement(
@@ -88,7 +92,8 @@ export const elephantSmall: SlideData = mainSlide(
                   },
                   color: [225, 153, 0],
                   radius: 20,
-                }
+                },
+                true
               ),
               ...createSlices(p, 560),
             ]),
@@ -104,7 +109,7 @@ export const elephantSmall: SlideData = mainSlide(
         'Checklists',
       ],
       { x: '35%', y: '40%' },
-      { size: 46 },
+      { size: mainTextFontSize },
       {
         animation: fadeInAnim,
         duration: 200,
@@ -127,7 +132,8 @@ const createSlices = (p: p5, startY: number): SlideElement[] => {
             h: 10,
           },
           color: slideBackground as number[],
-        }
+        },
+        true
       )
     )
   }

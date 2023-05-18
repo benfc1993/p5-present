@@ -1,5 +1,34 @@
 import { PixelPosition } from '../Animations/types'
+import { referenceScale } from '../Presentation'
 import { Position } from '../Slide'
+
+export const sizePercentageToPixels = (
+  sketch: p5,
+  size: Position
+): PixelPosition => {
+  let x = 0
+  let y = 0
+
+  if (typeof size.x === 'string') {
+    const { denom, addition } = createStringComponents(size.x)
+    x =
+      sketch.width / (100 / denom) +
+      addition * (sketch.width / referenceScale.w)
+  } else {
+    x = size.x
+  }
+
+  if (typeof size.y === 'string') {
+    const { denom, addition } = createStringComponents(size.y)
+    y =
+      sketch.height / (100 / denom) +
+      addition * (sketch.width / referenceScale.w)
+  } else {
+    y = size.y
+  }
+
+  return { x, y }
+}
 
 export const positionPercentageToPixels = (
   sketch: p5,
@@ -10,14 +39,18 @@ export const positionPercentageToPixels = (
 
   if (typeof position.x === 'string') {
     const { denom, addition } = createStringComponents(position.x)
-    x = sketch.width / (100 / denom) + addition
+    x =
+      sketch.width / (100 / denom) +
+      addition * (sketch.width / referenceScale.w)
   } else {
     x = position.x
   }
 
   if (typeof position.y === 'string') {
     const { denom, addition } = createStringComponents(position.y)
-    y = sketch.height / (100 / denom) + addition
+    y =
+      sketch.height / (100 / denom) +
+      addition * (sketch.height / referenceScale.h)
   } else {
     y = position.y
   }

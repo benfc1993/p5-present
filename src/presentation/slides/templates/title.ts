@@ -1,7 +1,7 @@
 import { RectElement } from '../../../Elements/RectElement'
 import { TitleElement } from '../../../Elements/TextElement'
 import { Frame, SlideData } from '../../../Slide'
-import { titleFontSize } from '../../presentationData'
+import { titleFontSize } from '../../utils'
 import { slideBackground } from './baseSlide'
 
 export const titleSlide = (title: string): SlideData => ({

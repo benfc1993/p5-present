@@ -1,6 +1,7 @@
+import { referenceScale } from '../Presentation'
 import { Position } from '../Slide'
 import { images } from '../assetInitialisation/loadImages'
-import { positionPercentageToPixels } from '../utils/positionPercentageToPixel'
+import { sizePercentageToPixels } from '../utils/positionPercentageToPixel'
 import { SlideElement } from './SlideElement'
 
 type ImageElementDataInput = {
@@ -46,13 +47,7 @@ export class ImageElement extends SlideElement {
 
   draw(): void {
     this.drawElement(() => {
-      const { x, y } = positionPercentageToPixels(this.sketch, {
-        x: this.data.size.w || 0,
-        y: this.data.size.h || 0,
-      })
-
-      const width = x ? x : y * (this.image.width / this.image.height)
-      const height = y ? y : x * (this.image.height / this.image.width)
+      const { width, height } = this.calculateSize()
 
       this.sketch.tint(255, 255 * this._opacity)
       this.sketch.rectMode('center')
@@ -64,5 +59,22 @@ export class ImageElement extends SlideElement {
         height
       )
     })
+  }
+  calculateSize(): { width: number; height: number } {
+    const { x, y } = sizePercentageToPixels(this.sketch, {
+      x: this.data.size.w || 0,
+      y: this.data.size.h || 0,
+    })
+
+    const scaledWidth = this.sketch.width / referenceScale.w
+
+    const width = x
+      ? x * scaledWidth
+      : y * (this.image.width / this.image.height) * scaledWidth
+    const height = y
+      ? y * scaledWidth
+      : x * (this.image.height / this.image.width) * scaledWidth
+
+    return { width, height }
   }
 }

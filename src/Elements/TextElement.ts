@@ -1,7 +1,8 @@
 import { HORIZ_ALIGN, THE_STYLE, VERT_ALIGN, WRAP_STYLE } from '../../p5'
+import { referenceScale } from '../Presentation'
 import { Position } from '../Slide'
 import { fonts } from '../assetInitialisation/loadFonts'
-import { titleFont, textFont } from '../presentation/presentationData'
+import { titleFont, textFont } from '../presentation/utils'
 import { SlideElement } from './SlideElement'
 
 export type TextElementData = {
@@ -52,7 +53,9 @@ export class TextElement extends SlideElement {
         this.data.alignment?.h || 'left',
         this.data.alignment?.v || 'bottom'
       )
-      this.sketch.textSize(this.data.size)
+      this.sketch.textSize(
+        this.data.size * (this.sketch.width / referenceScale.w)
+      )
       this.sketch.textStyle(this.data.style)
       if (this.data.text instanceof Array) {
         this.data.text.forEach((line, idx) =>
@@ -60,7 +63,11 @@ export class TextElement extends SlideElement {
             line,
             this.pixelPosition.x,
             this.pixelPosition.y +
-              idx * (this.data.size * this.data.lineHeight + 20)
+              idx *
+                (this.data.size *
+                  (this.sketch.width / referenceScale.w) *
+                  this.data.lineHeight +
+                  20)
           )
         )
       } else {
