@@ -15,7 +15,7 @@ export const sizePercentageToPixels = (
       sketch.width / (100 / denom) +
       addition * (sketch.width / referenceScale.w)
   } else {
-    x = size.x
+    x = size.x * (sketch.width / referenceScale.w)
   }
 
   if (typeof size.y === 'string') {
@@ -24,7 +24,7 @@ export const sizePercentageToPixels = (
       sketch.height / (100 / denom) +
       addition * (sketch.width / referenceScale.w)
   } else {
-    y = size.y
+    y = size.y * (sketch.width / referenceScale.w)
   }
 
   return { x, y }
@@ -43,7 +43,7 @@ export const positionPercentageToPixels = (
       sketch.width / (100 / denom) +
       addition * (sketch.width / referenceScale.w)
   } else {
-    x = position.x
+    x = position.x * (sketch.width / referenceScale.w)
   }
 
   if (typeof position.y === 'string') {
@@ -52,7 +52,7 @@ export const positionPercentageToPixels = (
       sketch.height / (100 / denom) +
       addition * (sketch.height / referenceScale.h)
   } else {
-    y = position.y
+    y = position.y * (sketch.height / referenceScale.h)
   }
 
   return { x, y }

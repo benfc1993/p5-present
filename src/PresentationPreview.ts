@@ -46,7 +46,7 @@ export class PresentationPreview extends Component {
     if (data.frame > 0 && slide.currentFrame + 1 !== data.frame) {
       slide.onEnd(data.slide - this.currentSlide)
       this.currentSlide = data.slide
-      await this.slides[this.currentSlide].goToFrame(data.frame)
+      await this.slides[this.currentSlide].goToFrame(data.frame, false)
       await this.slides[this.currentSlide].nextFrame()
       return
     }
@@ -54,7 +54,7 @@ export class PresentationPreview extends Component {
     if (lastFrame && this.currentSlide + 1 !== data.slide) {
       slide.onEnd(data.slide - this.currentSlide)
       this.currentSlide = data.slide
-      await this.slides[this.currentSlide].goToFrame(data.frame)
+      await this.slides[this.currentSlide].goToFrame(data.frame, false)
       await this.slides[this.currentSlide].nextFrame()
       return
     }

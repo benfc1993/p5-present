@@ -35,6 +35,7 @@ export class RectElement extends SlideElement {
 
   draw() {
     this.drawElement(() => {
+      this.radius = this.setRadius.bind(this, this.radius)()
       this.sketch.push()
       this.data.color[3] = this._opacity * this.alpha * 255
       this.sketch.noStroke()
@@ -85,8 +86,17 @@ export class RectElement extends SlideElement {
       | undefined
   ): [number, number, number, number] {
     if (!radius) return [0, 0, 0, 0]
-    if (typeof radius === 'number') return [radius, radius, radius, radius]
-    if (radius.length === 2) return [radius[0], radius[1], radius[0], radius[1]]
-    else return radius
+    const scale = this.sketch.width / referenceScale.w
+    if (typeof radius === 'number')
+      return [radius * scale, radius * scale, radius * scale, radius * scale]
+    if (radius.length === 2)
+      return [
+        radius[0] * scale,
+        radius[1] * scale,
+        radius[0] * scale,
+        radius[1] * scale,
+      ]
+    radius.forEach((r) => r * scale)
+    return radius
   }
 }

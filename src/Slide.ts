@@ -62,7 +62,6 @@ export class Slide extends Component {
   }
 
   async goToFrame(index: number, animate: boolean = true) {
-    console.log('goToFrame')
     const dir = this.currentFrame < index ? 1 : -1
     while (this.currentFrame !== index) {
       this.currentFrame += dir

@@ -45,6 +45,7 @@ export class TextElement extends SlideElement {
   }
 
   draw(): void {
+    console.log(this.sketch.width / referenceScale.w)
     this.drawElement(() => {
       this.sketch.push()
       this.sketch.textFont(fonts[this.font])
@@ -66,8 +67,7 @@ export class TextElement extends SlideElement {
               idx *
                 (this.data.size *
                   (this.sketch.width / referenceScale.w) *
-                  this.data.lineHeight +
-                  20)
+                  this.data.lineHeight)
           )
         )
       } else {

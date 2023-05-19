@@ -42,14 +42,14 @@ export class Presentation extends Component {
     if (data.frame > 0 && slide.currentFrame + 1 !== data.frame) {
       slide.onEnd(data.slide - this.currentSlide)
       this.currentSlide = data.slide
-      this.slides[this.currentSlide].goToFrame(data.frame)
+      this.slides[this.currentSlide].goToFrame(data.frame, false)
       return
     }
     const lastFrame = slide.currentFrame === slide.frames.length - 1
     if (lastFrame && this.currentSlide + 1 !== data.slide) {
       slide.onEnd(data.slide - this.currentSlide)
       this.currentSlide = data.slide
-      this.slides[this.currentSlide].goToFrame(data.frame)
+      this.slides[this.currentSlide].goToFrame(data.frame, false)
       return
     }
     this.nextFrame()
