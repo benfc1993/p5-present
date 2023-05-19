@@ -1,4 +1,16 @@
 body {
-    margin: 0;
-    overflow: hidden;
+  margin: 0;
+  overflow: hidden;
+}
+
+.presenter {
+  display: none;
+}
+
+.presenter.show {
+  display: flex;
+}
+
+.presenter-notes {
+  padding: 20px;
 }

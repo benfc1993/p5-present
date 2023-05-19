@@ -2,24 +2,22 @@
 import typescript from '@rollup/plugin-typescript'
 import serve from 'rollup-plugin-serve'
 import livereload from 'rollup-plugin-livereload'
+// import dotenvP from 'rollup-plugin-dotenv'
+import injectProcessEnv from 'rollup-plugin-inject-process-env'
 import { uglify } from 'rollup-plugin-uglify'
-import { swc, defineRollupSwcOption } from 'rollup-plugin-swc3'
-import builtins from 'rollup-plugin-node-builtins'
 import commonjs from '@rollup/plugin-commonjs'
 import { nodeResolve } from '@rollup/plugin-node-resolve'
 import nodePolyfills from 'rollup-plugin-node-polyfills'
 import json from '@rollup/plugin-json'
 
 const devPlugins =
-  process.env.ENVIRONMENT === 'DEV'
-    ? [serve({ contentBase: 'dist', open: false }), livereload()]
-    : [uglify()]
+  process.env.ENVIRONMENT === 'DEV' ? [livereload()] : [uglify()]
 
 export default {
   input: ['./src/index.ts'],
   output: {
     format: 'iife',
-    dir: 'dist',
+    dir: `dist`,
     sourcemap: true,
   },
   plugins: [
@@ -27,6 +25,7 @@ export default {
       include: 'node_modules/**',
       esmExternals: true,
     }),
+
     nodeResolve({
       jsnext: true,
       module: true,

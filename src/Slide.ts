@@ -4,6 +4,7 @@ import { SlideElement } from './Elements/SlideElement'
 import { positionPercentageToPixels } from './utils/positionPercentageToPixel'
 import { images } from './assetInitialisation/loadImages'
 import { ElementGroup } from './Elements/ElementGroup'
+import { APP_TYPE } from '.'
 
 export type Position = { x: number | string; y: number | string; rot?: number }
 
@@ -11,6 +12,7 @@ export type SlideData = {
   title: string
   background: [number, number, number] | string
   frames: Frame[]
+  notes?: string
 }
 
 type Transition = {
@@ -34,6 +36,7 @@ type Elements = Record<string, SlideElement>
 
 export class Slide extends Component {
   frames: Frame[]
+  notes: string | undefined
   currentFrame: number = 0
   elements: Elements = {}
   background: [number, number, number] | string = [60, 60, 64]
@@ -44,29 +47,29 @@ export class Slide extends Component {
     super(p)
     this.background = data.background
     this.frames = data.frames
+    this.notes = data.notes
   }
 
   async nextFrame() {
     if (this.currentFrame === this.frames.length - 1) return this.onEnd(1)
-    await this.goToFrame(this.currentFrame + 1)
+    this.currentFrame += 1
+    await this.drawFrame()
   }
 
   lastFrame() {
     if (this.currentFrame === 0) return this.onEnd(-1)
-    this.goToFrame(this.currentFrame - 1)
+    this.currentFrame -= 1
+    this.drawFrame()
   }
 
   async goToFrame(index: number) {
+    console.log('goToFrame')
     const dir = this.currentFrame < index ? 1 : -1
     while (this.currentFrame !== index) {
+      console.log(this.currentFrame)
       this.currentFrame += dir
       if (dir === 1) {
-        return new Promise<void>(async (resolve) => {
-          await this.drawFrame()
-          setTimeout(() => {
-            return resolve()
-          }, 250)
-        })
+        await this.drawFrame(false)
       } else {
         await this.revertFrame()
       }
@@ -77,6 +80,10 @@ export class Slide extends Component {
     this.active = true
     this.onEndSlide = onFinish
     this.drawFrame()
+    if (APP_TYPE === 'presenter') {
+      const notes = document.getElementById('notes')!
+      notes.innerHTML = this.notes || ''
+    }
   }
 
   onEnd(dir: number) {
@@ -104,7 +111,7 @@ export class Slide extends Component {
     Object.values(this.elements).forEach((el) => el.draw())
   }
 
-  async drawFrame() {
+  async drawFrame(allowAnimation: boolean = true) {
     const frame = this.frames[this.currentFrame]
 
     if (frame.out) {
@@ -127,7 +134,7 @@ export class Slide extends Component {
                     this.sketch,
                     transition.endPos || groupElement.position()
                   ),
-                  transition.duration || 0,
+                  allowAnimation ? transition.duration || 0 : 0,
                   transition.startPos || groupElement.position()
                 )
               )
@@ -142,7 +149,7 @@ export class Slide extends Component {
                   this.sketch,
                   transition.endPos || element.position()
                 ),
-                transition.duration || 0,
+                allowAnimation ? transition.duration || 0 : 0,
                 transition.startPos || element.position()
               )
             }
@@ -160,7 +167,7 @@ export class Slide extends Component {
                       this.sketch,
                       transition.endPos || groupElement.position()
                     ),
-                    transition.duration || 0,
+                    allowAnimation ? transition.duration || 0 : 0,
                     transition.startPos || groupElement.position()
                   )
                 )
@@ -176,7 +183,7 @@ export class Slide extends Component {
                   this.sketch,
                   transition.endPos || element.position()
                 ),
-                transition.duration || 0,
+                allowAnimation ? transition.duration || 0 : 0,
                 transition.startPos || element.position()
               )
             }

@@ -1,22 +1,26 @@
-import { Component } from 'p5-typescript'
+import { Component, addFunction } from 'p5-typescript'
 import { inputManager } from './Input'
 import { Slide } from './Slide'
 import { presentationData } from './presentation/presentationData'
 import { socket } from './socket'
 import { APP_TYPE } from '.'
+import { Presentation } from './Presentation'
 
 export const referenceScale = {
   w: 1920,
   h: 1080,
 }
 
-export class Presentation extends Component {
+export class PresentationPreview extends Component {
+  reference: Presentation
   started: boolean = false
   slides: Slide[] = []
   currentSlide: number = 0
+  start: { slide: number; frame: number } = { slide: 0, frame: 0 }
 
-  constructor(p: p5) {
+  constructor(p: p5, reference: Presentation) {
     super(p)
+    this.reference = reference
     this.setupSocket()
 
     if (APP_TYPE === 'presenter') {
@@ -31,18 +35,19 @@ export class Presentation extends Component {
           this.handleNextFrame(data)
           break
         case 'prevFrame':
-          if (data.caller === socket.id) return
-          this.prevFrame()
+          if (data.caller !== socket.id) this.prevFrame()
       }
     })
   }
 
   handleNextFrame(data: any) {
+    if (data.caller === socket.id) return
     const slide = this.slides[this.currentSlide]
     if (data.frame > 0 && slide.currentFrame + 1 !== data.frame) {
       slide.onEnd(data.slide - this.currentSlide)
       this.currentSlide = data.slide
       this.slides[this.currentSlide].goToFrame(data.frame)
+      this.slides[this.currentSlide].nextFrame()
       return
     }
     const lastFrame = slide.currentFrame === slide.frames.length - 1
@@ -50,6 +55,7 @@ export class Presentation extends Component {
       slide.onEnd(data.slide - this.currentSlide)
       this.currentSlide = data.slide
       this.slides[this.currentSlide].goToFrame(data.frame)
+      this.slides[this.currentSlide].nextFrame()
       return
     }
     this.nextFrame()
@@ -59,15 +65,24 @@ export class Presentation extends Component {
     inputManager.subscribeToKeyDown(this.onKeyPressed.bind(this))
     inputManager.subscribeToClick(this.onClick.bind(this))
     this.slides = presentationData.slides.map((slide) => new Slide(p, slide))
-    this.slides.push(
-      new Slide(p, { background: [0, 0, 0], frames: [{}], title: 'End slide' })
-    )
   }
   draw(): void {
     if (!this.started) {
       this.slides[0].onStartSlide(this.nextSlide.bind(this))
+      this.slides[this.currentSlide].nextFrame()
       this.started = true
+      this.start = {
+        slide: this.currentSlide,
+        frame: this.slides[this.currentSlide].currentFrame,
+      }
     }
+    this.sketch.rect(0, 0, 100, 30)
+    this.sketch.push()
+    this.sketch.rectMode('corner')
+    this.sketch.textAlign('center')
+    this.sketch.textSize(16)
+    this.sketch.text('Next Frame', 0, 7, 100, 30)
+    this.sketch.pop()
   }
 
   onClick = (e: MouseEvent) => {
@@ -88,22 +103,14 @@ export class Presentation extends Component {
       case 'ArrowRight':
         if (this.currentSlide === this.slides.length - 1) return
         this.nextFrame()
-        socket.emit('nextFrame', {
-          slide: this.currentSlide,
-          frame: this.slides[this.currentSlide].currentFrame,
-        })
         break
       case 'ArrowLeft':
         if (
-          this.currentSlide === 0 &&
-          this.slides[this.currentSlide].currentFrame === 0
+          this.currentSlide === this.start.slide &&
+          this.slides[this.currentSlide].currentFrame === this.start.frame
         )
           return
 
-        socket.emit('prevFrame', {
-          slide: this.currentSlide,
-          frame: this.slides[this.currentSlide].currentFrame,
-        })
         this.prevFrame()
         break
       case 'ArrowUp':

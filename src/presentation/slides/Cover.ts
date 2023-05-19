@@ -52,4 +52,5 @@ export const coverSlide: SlideData = {
       },
     },
   ],
+  notes: `<p>Testing notes</p>`,
 }
