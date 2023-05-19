@@ -8,6 +8,7 @@ import { elephantEasy } from './slides/elephantEasy'
 import { elephantSmall } from './slides/elephantSmall'
 import { hyperfocus } from './slides/hyperfocus'
 import { openDocument } from './slides/openDocument'
+import { sideQuests } from './slides/sideQuests'
 import { titleSlide } from './slides/templates/title'
 
 type PresentationData = {
@@ -30,5 +31,6 @@ export const presentationData: PresentationData = {
     titleSlide('Context switching'),
     contextSwitching,
     titleSlide('Sidequests'),
+    sideQuests,
   ],
 }
