@@ -71,19 +71,26 @@ export class Presentation extends Component {
   }
 
   onClick = (e: MouseEvent) => {
-    // switch (e.button) {
-    //   case 0:
-    //     if (this.currentSlide === this.slides.length - 1) return
-    //     if (!this.listener) socket.emit('nextFrame')
-    //     this.slides[this.currentSlide].nextFrame()
-    //     break
-    //   case 1:
-    //     this.slides[this.currentSlide].lastFrame()
-    //     break
-    // }
+    switch (e.button) {
+      case 0:
+        if (this.currentSlide === this.slides.length - 1) return
+        this.nextFrame()
+        socket.emit('nextFrame', {
+          slide: this.currentSlide,
+          frame: this.slides[this.currentSlide].currentFrame,
+        })
+        break
+      case 1:
+        this.prevFrame()
+        socket.emit('prevFrame', {
+          slide: this.currentSlide,
+          frame: this.slides[this.currentSlide].currentFrame,
+        })
+        break
+    }
   }
 
-  onKeyPressed = (e: KeyboardEvent) => {
+  onKeyPressed = async (e: KeyboardEvent) => {
     switch (e.code) {
       case 'ArrowRight':
         if (this.currentSlide === this.slides.length - 1) return
@@ -100,20 +107,24 @@ export class Presentation extends Component {
         )
           return
 
+        this.prevFrame()
         socket.emit('prevFrame', {
           slide: this.currentSlide,
           frame: this.slides[this.currentSlide].currentFrame,
         })
-        this.prevFrame()
         break
-      case 'ArrowUp':
-        if (this.currentSlide === this.slides.length - 1) return
-        this.slides[this.currentSlide].onEnd(1)
-        break
-      case 'ArrowDown':
-        if (this.currentSlide === 0) return
-        this.slides[this.currentSlide].onEnd(-1)
-        break
+      // case 'ArrowUp':
+      //   if (this.currentSlide === this.slides.length - 1) return
+      //   this.slides[this.currentSlide].onEnd(1)
+      //   await this.slides[this.currentSlide].goToFrame(
+      //     this.slides[this.currentSlide].frames.length - 1
+      //   )
+      //   break
+      // case 'ArrowDown':
+      //   if (this.currentSlide === 0) return
+      //   await this.slides[this.currentSlide].goToFrame(0)
+      //   this.slides[this.currentSlide].onEnd(-1)
+      //   break
     }
   }
 

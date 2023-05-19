@@ -40,22 +40,22 @@ export class PresentationPreview extends Component {
     })
   }
 
-  handleNextFrame(data: any) {
+  async handleNextFrame(data: any) {
     if (data.caller === socket.id) return
     const slide = this.slides[this.currentSlide]
     if (data.frame > 0 && slide.currentFrame + 1 !== data.frame) {
       slide.onEnd(data.slide - this.currentSlide)
       this.currentSlide = data.slide
-      this.slides[this.currentSlide].goToFrame(data.frame)
-      this.slides[this.currentSlide].nextFrame()
+      await this.slides[this.currentSlide].goToFrame(data.frame)
+      await this.slides[this.currentSlide].nextFrame()
       return
     }
     const lastFrame = slide.currentFrame === slide.frames.length - 1
     if (lastFrame && this.currentSlide + 1 !== data.slide) {
       slide.onEnd(data.slide - this.currentSlide)
       this.currentSlide = data.slide
-      this.slides[this.currentSlide].goToFrame(data.frame)
-      this.slides[this.currentSlide].nextFrame()
+      await this.slides[this.currentSlide].goToFrame(data.frame)
+      await this.slides[this.currentSlide].nextFrame()
       return
     }
     this.nextFrame()
@@ -65,6 +65,12 @@ export class PresentationPreview extends Component {
     inputManager.subscribeToKeyDown(this.onKeyPressed.bind(this))
     inputManager.subscribeToClick(this.onClick.bind(this))
     this.slides = presentationData.slides.map((slide) => new Slide(p, slide))
+    this.slides.push(
+      new Slide(p, { background: [0, 0, 0], frames: [{}], title: 'End slide' })
+    )
+    this.slides.push(
+      new Slide(p, { background: [0, 0, 0], frames: [{}], title: 'End slide' })
+    )
   }
   draw(): void {
     if (!this.started) {
@@ -86,16 +92,19 @@ export class PresentationPreview extends Component {
   }
 
   onClick = (e: MouseEvent) => {
-    // switch (e.button) {
-    //   case 0:
-    //     if (this.currentSlide === this.slides.length - 1) return
-    //     if (!this.listener) socket.emit('nextFrame')
-    //     this.slides[this.currentSlide].nextFrame()
-    //     break
-    //   case 1:
-    //     this.slides[this.currentSlide].lastFrame()
-    //     break
-    // }
+    switch (e.button) {
+      case 0:
+        if (this.currentSlide === this.slides.length - 1) return
+        this.nextFrame()
+        break
+      case 1:
+        if (
+          this.currentSlide === this.start.slide &&
+          this.slides[this.currentSlide].currentFrame === this.start.frame
+        )
+          this.prevFrame()
+        break
+    }
   }
 
   onKeyPressed = (e: KeyboardEvent) => {
@@ -113,14 +122,14 @@ export class PresentationPreview extends Component {
 
         this.prevFrame()
         break
-      case 'ArrowUp':
-        if (this.currentSlide === this.slides.length - 1) return
-        this.slides[this.currentSlide].onEnd(1)
-        break
-      case 'ArrowDown':
-        if (this.currentSlide === 0) return
-        this.slides[this.currentSlide].onEnd(-1)
-        break
+      // case 'ArrowUp':
+      //   if (this.currentSlide === this.slides.length - 1) return
+      //   this.slides[this.currentSlide].onEnd(1)
+      //   break
+      // case 'ArrowDown':
+      //   if (this.currentSlide === 0) return
+      //   this.slides[this.currentSlide].onEnd(-1)
+      //   break
     }
   }
 

@@ -40,7 +40,7 @@ export const sketch = new Sketch(
 )
 
 if (APP_TYPE === 'presenter') {
-  let presenterPresentation: Presentation
+  let presenterPresentation: PresentationPreview
 
   const nextSketch = new Sketch(
     (p: p5) => {
