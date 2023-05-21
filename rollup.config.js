@@ -1,9 +1,6 @@
 /* eslint-env node */
 import typescript from '@rollup/plugin-typescript'
-import serve from 'rollup-plugin-serve'
 import livereload from 'rollup-plugin-livereload'
-// import dotenvP from 'rollup-plugin-dotenv'
-import injectProcessEnv from 'rollup-plugin-inject-process-env'
 import { uglify } from 'rollup-plugin-uglify'
 import commonjs from '@rollup/plugin-commonjs'
 import { nodeResolve } from '@rollup/plugin-node-resolve'
@@ -19,6 +16,7 @@ export default {
     format: 'iife',
     dir: `dist`,
     sourcemap: true,
+    name: 'index',
   },
   plugins: [
     commonjs({
@@ -45,22 +43,9 @@ export default {
     json(),
     ...devPlugins,
   ],
-  // globals: ['crypto', 'fs'],
-  onwarn: function (warning) {
-    // Skip certain warnings
-
-    // should intercept ... but doesn't in some rollup versions
-    if (warning.code === 'THIS_IS_UNDEFINED') {
-      return
+  onwarn(warning) {
+    if (warning.code !== 'CIRCULAR_DEPENDENCY') {
+      console.error(`(!) ${warning.message}`)
     }
-    if (
-      new RegExp(
-        /^[Circular dependency: node_modules\/rollup-plugin\-node\-polyfills\/polyfills\/readable\-stream\/duplex.js]/
-      ).test(warning)
-    ) {
-      return
-    }
-    // console.warn everything else
-    console.warn(warning.code)
   },
 }

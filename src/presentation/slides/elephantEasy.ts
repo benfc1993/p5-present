@@ -204,7 +204,7 @@ export const elephantEasy: SlideData = mainSlide(
                   text: ['-  Long', '-  Boring'],
                   alignment: { h: 'left' },
                   size: mainTextFontSize,
-                  lineHeight: 2,
+                  lineHeight: 1.5,
                 }
               ),
             ]),
@@ -267,11 +267,12 @@ export const elephantEasy: SlideData = mainSlide(
       },
     },
   ],
+  '',
   true
 )
 
 const createSlices = (p: p5, startY: number): SlideElement[] => {
-  const slices = []
+  const slices: SlideElement[] = []
   for (let i = 0; i <= 4; i++) {
     slices.push(
       new RectElement(

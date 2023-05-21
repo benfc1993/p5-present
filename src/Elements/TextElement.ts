@@ -45,10 +45,10 @@ export class TextElement extends SlideElement {
   }
 
   draw(): void {
-    console.log(this.sketch.width / referenceScale.w)
     this.drawElement(() => {
       this.sketch.push()
       this.sketch.textFont(fonts[this.font])
+
       this.sketch.fill([...this.data.color, 255 * this._opacity])
       this.sketch.textAlign(
         this.data.alignment?.h || 'left',

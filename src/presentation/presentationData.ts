@@ -10,6 +10,7 @@ import { hyperfocus } from './slides/hyperfocus'
 import { openDocument } from './slides/openDocument'
 import { sideQuests } from './slides/sideQuests'
 import { titleSlide } from './slides/templates/title'
+import { tipsAndSuperpowers } from './slides/tipsAndSuperpowers'
 
 type PresentationData = {
   slides: SlideData[]
@@ -20,7 +21,7 @@ export const presentationData: PresentationData = {
     coverSlide,
     introSlide,
     AdhdBrain,
-    titleSlide('Ooh Shiny'),
+    titleSlide('Oooh... Shiny'),
     openDocument,
     titleSlide("Where's my dopamine"),
     elephant,
@@ -30,6 +31,7 @@ export const presentationData: PresentationData = {
     hyperfocus,
     titleSlide('Context switching'),
     contextSwitching,
+    tipsAndSuperpowers,
     titleSlide('Sidequests'),
     sideQuests,
   ],

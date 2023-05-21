@@ -8,6 +8,7 @@ import { slideBackground } from './baseSlide'
 export const mainSlide = (
   title: string,
   frames: Frame[],
+  notes?: string,
   withHeader: boolean = false
 ): SlideData => ({
   title,
@@ -42,4 +43,5 @@ export const mainSlide = (
     },
     ...frames.slice(withHeader ? 1 : 0),
   ],
+  notes: notes,
 })

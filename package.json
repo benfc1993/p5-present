@@ -5,12 +5,13 @@
   "license": "MIT",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "rm -rf dist && ./assetList.sh && cp -r public dist && yarn rollup -c --bundleConfigAsCjs",
-    "client:dev": "ENVIRONMENT=DEV yarn build -w",
-    "dev": "./assetList.sh && concurrently \"yarn server:dev\" \"yarn client:dev\"",
-    "server:dev": "nodemon ./server.js",
-    "server": "node ./server.js",
-    "start": "ENVIRONMENT=PROD yarn build && yarn server"
+    "build:client": "rm -rf dist/assets && ./assetList.sh && cp -r public/ dist && yarn rollup -c --bundleConfigAsCjs",
+    "build:server": "tsc ./src/server.ts --moduleResolution node --outDir dist",
+    "client:dev": "ENVIRONMENT=DEV yarn build:client -w",
+    "dev": "concurrently \"yarn server:dev\" \"yarn client:dev\"",
+    "server:dev": "yarn build:server && concurrently \"yarn build:server -w\" \"nodemon ./dist/server.js\"",
+    "server": "yarn build:server && node ./dist/server.js",
+    "start": "ENVIRONMENT=PROD yarn build:client && yarn server"
   },
   "dependencies": {
     "browserify-fs": "^1.0.0",

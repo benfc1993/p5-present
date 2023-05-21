@@ -302,4 +302,8 @@ export const introSlide: SlideData = {
       },
     },
   ],
+  notes: `<ul><li>Explain there are two types of ADHD, inatentive and hyperactive.</li>
+  <li>I have combined type ADHD - example of how I used to be art work</li>
+  <li>Sliding scale</li>
+  </ul>`,
 }

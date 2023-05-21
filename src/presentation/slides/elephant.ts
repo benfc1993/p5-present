@@ -136,5 +136,6 @@ export const elephant: SlideData = mainSlide(
       },
     },
   ],
+  '',
   true
 )

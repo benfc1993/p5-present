@@ -36,9 +36,7 @@ export class ElementGroup extends SlideElement {
   positionElement(element: SlideElement) {
     const { x, y } = this.pixelPosition
     const { x: elX, y: elY } = element.pixelPosition
-    console.log(this.elements)
-    console.log(x)
-    console.log(elX)
+
     element.setPosition({
       x: (x + elX) / (this.sketch.width / referenceScale.w),
       y: (y + elY) / (this.sketch.height / referenceScale.h),

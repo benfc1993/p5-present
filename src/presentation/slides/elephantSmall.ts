@@ -116,11 +116,12 @@ export const elephantSmall: SlideData = mainSlide(
       }
     ),
   ],
+  '',
   true
 )
 
 const createSlices = (p: p5, startY: number): SlideElement[] => {
-  const slices = []
+  const slices: SlideElement[] = []
   for (let i = 0; i <= 4; i++) {
     slices.push(
       new RectElement(
