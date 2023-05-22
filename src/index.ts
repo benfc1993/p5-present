@@ -3,7 +3,7 @@ import { inputManager } from './Input'
 import { Presentation } from './Presentation'
 import { loadImages } from './assetInitialisation/loadImages'
 import { loadFonts } from './assetInitialisation/loadFonts'
-import { PresentationPreview } from './PresentationPreview'
+import { PresentationPreview, referenceScale } from './PresentationPreview'
 
 export const APP_TYPE =
   window.location.pathname === '/' ? 'audience' : 'presenter'
@@ -18,14 +18,18 @@ export const sketch = new Sketch(
       loadFonts(p)
     }
     p.setup = async () => {
+      sketch.addComponent(inputManager)
       if (APP_TYPE === 'presenter')
         sketch.sketch.createCanvas(
           sketch.sketch.windowWidth / 2,
-          sketch.sketch.windowHeight / 2
+          (sketch.sketch.windowWidth / 2) *
+            (referenceScale.h / referenceScale.w)
         )
-      sketch.addComponent(inputManager)
       presentation = new Presentation(p)
       sketch.addComponent(presentation)
+      if (APP_TYPE === 'presenter') {
+        setupWatcher()
+      }
     }
     p.draw = () => {}
     p.resizeCanvas.addFunction(() => {
@@ -39,7 +43,7 @@ export const sketch = new Sketch(
   }
 )
 
-if (APP_TYPE === 'presenter') {
+const setupWatcher = () => {
   let presenterPresentation: PresentationPreview
 
   const nextSketch = new Sketch(
@@ -50,8 +54,9 @@ if (APP_TYPE === 'presenter') {
       }
       p.setup = async () => {
         nextSketch.sketch.createCanvas(
-          nextSketch.sketch.windowWidth / 2,
-          nextSketch.sketch.windowHeight / 2
+          sketch.sketch.windowWidth / 2,
+          (sketch.sketch.windowWidth / 2) *
+            (referenceScale.h / referenceScale.w)
         )
         presenterPresentation = new PresentationPreview(p, presentation)
         nextSketch.addComponent(presenterPresentation)

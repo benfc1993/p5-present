@@ -15,6 +15,13 @@ export class InputManager extends Component {
   }
 
   onClick(e: MouseEvent) {
+    if (
+      this.sketch.mouseX < 0 ||
+      this.sketch.mouseX > this.sketch.width ||
+      this.sketch.mouseY < 0 ||
+      this.sketch.mouseY > this.sketch.height
+    )
+      return
     e.preventDefault()
     this.onClickSubscribers.forEach((subscriber) => subscriber(e))
   }

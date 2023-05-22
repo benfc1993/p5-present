@@ -1,5 +1,4 @@
 import { fadeInAnim } from '../../Animations/fadeInAnim'
-import { linearMoveAnim } from '../../Animations/linearMoveAnim'
 import { ElementGroup } from '../../Elements/ElementGroup'
 import { RectElement } from '../../Elements/RectElement'
 import { SlideElement } from '../../Elements/SlideElement'
@@ -105,8 +104,8 @@ export const elephantSmall: SlideData = mainSlide(
       [
         'Small chunks',
         'Well-defined requirements',
-        'Good indication of effort / time',
         'Checklists',
+        'Good indication of effort / time',
       ],
       { x: '35%', y: '40%' },
       { size: mainTextFontSize },

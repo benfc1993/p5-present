@@ -53,7 +53,7 @@ export const openDocument: SlideData = mainSlide('Open Document', [
             new ImageElement(
               p,
               { x: '100% + -300', y: '10% + 150' },
-              { image: 'blackboard', size: { w: 500 } }
+              { image: 'blackboard', size: { w: 510, h: 345 } }
             ),
             new ImageElement(
               p,

@@ -1,7 +1,5 @@
-import { linearMoveAnim } from '../../../src/Animations/linearMoveAnim'
 import { TextElement, TitleElement } from '../../../src/Elements/TextElement'
 import { SlideData } from '../../../src/Slide'
-import { fadeOutAnim } from '../../Animations/fadeOutAnim'
 import { mainTextFontSize, titleFontSize } from '../utils'
 import { slideBackground } from './templates/baseSlide'
 

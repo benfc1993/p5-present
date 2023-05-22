@@ -20,7 +20,7 @@ export const tipsAndSuperpowers = mainSlide(
                 p,
                 { x: 0, y: mainTextFontSize * 2 },
                 {
-                  text: ['-   Have a stimming toy'],
+                  text: ['-   Have a stimming toy', '-   Background music'],
                   size: mainTextFontSize,
                   lineHeight: 1.5,
                 }
@@ -53,7 +53,10 @@ export const tipsAndSuperpowers = mainSlide(
       },
     },
   ],
-  `<p>Empathy</p>
+  `<h4>Tips</h4>
+  <p>Background music helps occupy subconscious</p>
+  <h4>Super powers</h4>
+  <p>Empathy</p>
   <p>Vibe check</p>
   <p>Ability to see solutions others might miss</p>`,
   true

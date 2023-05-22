@@ -4,34 +4,17 @@ const app = express()
 const http = require('http')
 const server = http.createServer(app)
 import { Response } from 'express'
-import { Server, Socket } from 'socket.io'
+import { Server } from 'socket.io'
 import { DefaultEventsMap } from 'socket.io/dist/typed-events'
+import {
+  PresentationEmitEventsMap,
+  PresentationListenEventsMap,
+  PresentationServerSocket,
+  TransitionData,
+} from './socketTypes'
 
 app.use(cors())
-// app.use(express.static('dist/aud'))
-// app.use(express.static('dist/pres'))
 app.use(express.static('dist'))
-
-type TransitionData = { slide: number; frame: number }
-
-interface PresentationListenEventsMap {
-  register: () => void
-  nextFrame: (data: TransitionData) => void
-  prevFrame: (data: TransitionData) => void
-}
-
-interface PresentationEmitEventsMap {
-  register: () => void
-  nextFrame: (data: TransitionData & { caller: string }) => void
-  prevFrame: (data: TransitionData & { caller: string }) => void
-}
-
-type PresentationSocket = Socket<
-  PresentationListenEventsMap,
-  PresentationEmitEventsMap,
-  DefaultEventsMap,
-  any
->
 
 const io = new Server<
   PresentationListenEventsMap,
@@ -47,16 +30,22 @@ const io = new Server<
   },
 })
 
-const listeners: PresentationSocket[] = []
+const listeners: PresentationServerSocket[] = []
+const currentSlideData: TransitionData = { slide: 0, frame: 0 }
 
 io.on('connection', (socket) => {
   socket.on('register', () => {
     listeners.push(socket)
+    socket.emit('nextFrame', { caller: 'server', ...currentSlideData })
   })
   socket.on('nextFrame', (data) => {
+    currentSlideData.slide = data.slide
+    currentSlideData.frame = data.frame
     io.emit('nextFrame', { caller: socket.id, ...data })
   })
   socket.on('prevFrame', (data) => {
+    currentSlideData.slide = data.slide
+    currentSlideData.frame = data.frame
     io.emit('prevFrame', { caller: socket.id, ...data })
   })
 })

@@ -50,10 +50,10 @@ export class Slide extends Component {
     this.notes = data.notes
   }
 
-  async nextFrame() {
+  async nextFrame(animate: boolean = true) {
     if (this.currentFrame === this.frames.length - 1) return this.onEnd(1)
     this.currentFrame += 1
-    await this.drawFrame()
+    await this.drawFrame(animate)
   }
 
   lastFrame() {
@@ -66,24 +66,27 @@ export class Slide extends Component {
     while (this.currentFrame !== index) {
       this.currentFrame += dir
       if (dir === 1) {
-        await this.drawFrame(false)
+        await this.drawFrame(animate)
       } else {
         await this.revertFrame()
       }
     }
   }
 
-  onStartSlide(onFinish: (dir: number) => void) {
+  onStartSlide(onFinish: (dir: number) => void, preview: boolean = false) {
     this.active = true
     this.onEndSlide = onFinish
     this.drawFrame()
-    if (APP_TYPE === 'presenter') {
+    if (APP_TYPE === 'presenter' && !preview) {
       const notes = document.getElementById('notes')!
       notes.innerHTML = this.notes || ''
     }
   }
 
   onEnd(dir: number) {
+    if (dir < 0) {
+      this.goToFrame(0, false)
+    }
     this.active = false
     this.onEndSlide(dir)
   }
@@ -214,7 +217,7 @@ export class Slide extends Component {
                     this.sketch,
                     transition.endPos || groupElement.position()
                   ),
-                  transition.duration || 0,
+                  allowAnimation ? transition.duration || 0 : 0,
                   transition.endPos || groupElement.position()
                 )
               )
@@ -229,7 +232,7 @@ export class Slide extends Component {
                   this.sketch,
                   transition.endPos || element.position()
                 ),
-                transition.duration || 0,
+                allowAnimation ? transition.duration || 0 : 0,
                 transition.endPos || element.position()
               )
             }
@@ -247,7 +250,7 @@ export class Slide extends Component {
                       this.sketch,
                       transition.endPos || groupElement.position()
                     ),
-                    transition.duration || 0,
+                    allowAnimation ? transition.duration || 0 : 0,
                     transition.endPos || groupElement.position()
                   )
                 )
@@ -263,7 +266,7 @@ export class Slide extends Component {
                   this.sketch,
                   transition.endPos || element.position()
                 ),
-                transition.duration || 0,
+                allowAnimation ? transition.duration || 0 : 0,
                 transition.endPos || element.position()
               )
             }
@@ -274,7 +277,7 @@ export class Slide extends Component {
     }
   }
 
-  revertFrame() {
+  async revertFrame() {
     const prevFrame = this.frames[this.currentFrame + 1]
     const frame = this.frames[this.currentFrame]
 
@@ -290,9 +293,25 @@ export class Slide extends Component {
 
     if (frame.in)
       for (const [elementId, transition] of Object.entries(frame.in)) {
-        this.elements[elementId].setPosition(
-          transition.endPos || this.elements[elementId].position()
-        )
+        if (transition.animation) {
+          await transition.animation(
+            this.elements[elementId],
+            positionPercentageToPixels(
+              this.sketch,
+              transition.startPos || this.elements[elementId].position()
+            ),
+            positionPercentageToPixels(
+              this.sketch,
+              transition.endPos || this.elements[elementId].position()
+            ),
+            0,
+            transition.endPos || this.elements[elementId].position()
+          )
+        } else {
+          this.elements[elementId].setPosition(
+            transition.endPos || this.elements[elementId].position()
+          )
+        }
       }
   }
 }

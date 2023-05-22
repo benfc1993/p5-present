@@ -61,20 +61,24 @@ export class ImageElement extends SlideElement {
     })
   }
   calculateSize(): { width: number; height: number } {
+    const scaledWidth = this.sketch.width / referenceScale.w
+
     const { x, y } = sizePercentageToPixels(this.sketch, {
       x: this.data.size.w || 0,
       y: this.data.size.h || 0,
     })
 
-    const scaledWidth = this.sketch.width / referenceScale.w
-
-    const width = x
-      ? x * scaledWidth
-      : y * (this.image.width / this.image.height) * scaledWidth
-    const height = y
-      ? y * scaledWidth
-      : x * (this.image.height / this.image.width) * scaledWidth
+    const width = x ? x : y * (this.image.width / this.image.height)
+    const height = y ? y : x * (this.image.height / this.image.width)
 
     return { width, height }
   }
+
+  remove(): void {
+    console.log('remove image')
+    super.remove()
+  }
+  onAnimatedIn() {}
+  onAnimatedOut() {}
+  onReset() {}
 }

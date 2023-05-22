@@ -1,3 +1,4 @@
+import { fadeInAnim } from '../../Animations/fadeInAnim'
 import { ElementGroup } from '../../Elements/ElementGroup'
 import { RectElement } from '../../Elements/RectElement'
 import { SlideElement } from '../../Elements/SlideElement'
@@ -129,6 +130,8 @@ export const elephantEasy: SlideData = mainSlide(
                 }
               ),
             ]),
+          animation: fadeInAnim,
+          duration: 250,
         },
       },
     },
@@ -152,6 +155,8 @@ export const elephantEasy: SlideData = mainSlide(
                 }
               ),
             ]),
+          animation: fadeInAnim,
+          duration: 250,
         },
       },
     },
@@ -184,6 +189,8 @@ export const elephantEasy: SlideData = mainSlide(
                 }
               ),
             ]),
+          animation: fadeInAnim,
+          duration: 250,
         },
       },
     },
@@ -208,6 +215,8 @@ export const elephantEasy: SlideData = mainSlide(
                 }
               ),
             ]),
+          animation: fadeInAnim,
+          duration: 250,
         },
       },
     },
@@ -263,6 +272,8 @@ export const elephantEasy: SlideData = mainSlide(
                 }
               ),
             ]),
+          animation: fadeInAnim,
+          duration: 250,
         },
       },
     },
