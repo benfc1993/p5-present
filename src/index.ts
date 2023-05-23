@@ -19,14 +19,11 @@ export const sketch = new Sketch(
     }
     p.setup = async () => {
       sketch.addComponent(inputManager)
-      if (APP_TYPE === 'presenter')
-        sketch.sketch.createCanvas(
-          sketch.sketch.windowWidth / 2,
-          (sketch.sketch.windowWidth / 2) *
-            (referenceScale.h / referenceScale.w)
-        )
+
       presentation = new Presentation(p)
+
       sketch.addComponent(presentation)
+
       if (APP_TYPE === 'presenter') {
         setupWatcher()
       }
@@ -40,6 +37,13 @@ export const sketch = new Sketch(
     divId: `canvas-${APP_TYPE}`,
     canvasColor: { r: 60, g: 60, b: 64 },
     fullscreen: APP_TYPE === 'audience',
+    ...(APP_TYPE === 'presenter' && {
+      size: {
+        w: '50%',
+        h: () =>
+          (window.innerWidth / 2) * (referenceScale.h / referenceScale.w),
+      },
+    }),
   }
 )
 
@@ -53,11 +57,6 @@ const setupWatcher = () => {
         loadFonts(p)
       }
       p.setup = async () => {
-        nextSketch.sketch.createCanvas(
-          sketch.sketch.windowWidth / 2,
-          (sketch.sketch.windowWidth / 2) *
-            (referenceScale.h / referenceScale.w)
-        )
         presenterPresentation = new PresentationPreview(p, presentation)
         nextSketch.addComponent(presenterPresentation)
       }
@@ -69,7 +68,13 @@ const setupWatcher = () => {
     {
       divId: `canvas-presenter-next`,
       canvasColor: { r: 60, g: 60, b: 64 },
-      fullscreen: false,
+      ...(APP_TYPE === 'presenter' && {
+        size: {
+          w: '50%',
+          h: () =>
+            (window.innerWidth / 2) * (referenceScale.h / referenceScale.w),
+        },
+      }),
     }
   )
 }

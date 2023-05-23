@@ -2011,10 +2011,10 @@ optionator@^0.8.1:
   resolved "https://registry.yarnpkg.com/opts/-/opts-2.0.2.tgz#a17e189fbbfee171da559edd8a42423bc5993ce1"
   integrity sha512-k41FwbcLnlgnFh69f4qdUfvDQ+5vaSDnVPFI/y5XuhKRq97EnVVneO9F1ESVCdiVu4fCS2L8usX3mU331hB7pg==
 
-p5-typescript@^2.4.1:
-  version "2.4.1"
-  resolved "https://registry.yarnpkg.com/p5-typescript/-/p5-typescript-2.4.1.tgz#bc812f5d8f554cc20ec08716d172226ded3ceeee"
-  integrity sha512-VeI4Q1LLg+giGx3pzZ5dj59it2yVVnk4i9RRcE///Z5RX26JuB443mKdS8KphZ9xYvUcyplgzmeAZtsaRQ9rMg==
+p5-typescript@^2.5.1:
+  version "2.5.1"
+  resolved "https://registry.yarnpkg.com/p5-typescript/-/p5-typescript-2.5.1.tgz#03fa72f61a0922ec3730f200ec64d22e833c4ee7"
+  integrity sha512-cctOsfnJyvExHOFgEXuZKElAvLZMzUGg8dOAHxIQwUtWymSjFIvLWGASzsmTQywleIHM0TedF301YSX3661grg==
   dependencies:
     "@types/p5" "^1.3.1"
     p5 "^1.5.0"

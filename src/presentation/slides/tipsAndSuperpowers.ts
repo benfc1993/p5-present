@@ -23,6 +23,7 @@ export const tipsAndSuperpowers = mainSlide(
                   text: [
                     '-   Have a stimming toy',
                     '-   Background music',
+                    '-   Keep things visible',
                     '-    Spell checkers',
                   ],
                   size: mainTextFontSize,
