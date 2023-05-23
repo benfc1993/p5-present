@@ -1,5 +1,5 @@
-import { TextElement, TitleElement } from '../../../src/Elements/TextElement'
-import { SlideData } from '../../../src/Slide'
+import { TextElement, TitleElement } from '../../Elements/TextElement'
+import { SlideData } from '../../Slide'
 import { mainTextFontSize, titleFontSize } from '../utils'
 import { slideBackground } from './templates/baseSlide'
 
@@ -15,7 +15,7 @@ export const coverSlide: SlideData = {
               p,
               { x: '50%', y: '50% + -60' },
               {
-                text: 'Alarms, diagrams, side-quests',
+                text: 'Alarms, diagrams, side quests',
                 alignment: { h: 'center', v: 'center' },
                 size: titleFontSize,
               }

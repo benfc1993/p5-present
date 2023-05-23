@@ -20,7 +20,11 @@ export const tipsAndSuperpowers = mainSlide(
                 p,
                 { x: 0, y: mainTextFontSize * 2 },
                 {
-                  text: ['-   Have a stimming toy', '-   Background music'],
+                  text: [
+                    '-   Have a stimming toy',
+                    '-   Background music',
+                    '-    Spell checkers',
+                  ],
                   size: mainTextFontSize,
                   lineHeight: 1.5,
                 }
@@ -41,8 +45,8 @@ export const tipsAndSuperpowers = mainSlide(
                 {
                   text: [
                     '-   Heightened EQ',
-                    '-   Creative problem solving',
                     '-   Pattern recognition',
+                    '-   Creative problem solving',
                   ],
                   size: mainTextFontSize,
                   lineHeight: 1.5,

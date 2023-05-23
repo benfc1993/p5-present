@@ -278,7 +278,7 @@ export const elephantEasy: SlideData = mainSlide(
       },
     },
   ],
-  '',
+  `<ul><li>Use transcription software</li><li>take pictures of whiteboard sessions</li></ul>`,
   true
 )
 

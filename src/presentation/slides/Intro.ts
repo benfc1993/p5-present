@@ -1,8 +1,9 @@
-import { fadeInAnim } from '../../../src/Animations/fadeInAnim'
-import { ImageElement } from '../../../src/Elements/ImageElement'
-import { TextElement, TitleElement } from '../../../src/Elements/TextElement'
-import { SlideData } from '../../../src/Slide'
+import { fadeInAnim } from '../../Animations/fadeInAnim'
+import { ImageElement } from '../../Elements/ImageElement'
+import { TextElement, TitleElement } from '../../Elements/TextElement'
+import { SlideData } from '../../Slide'
 import { fadeOutAnim } from '../../Animations/fadeOutAnim'
+import { ElementGroup } from '../../Elements/ElementGroup'
 import { RectElement } from '../../Elements/RectElement'
 import { mainTextFontSize, titleFontSize } from '../utils'
 
@@ -43,24 +44,20 @@ export const introSlide: SlideData = {
           animation: fadeInAnim,
           duration: 200,
         },
-        githubText: {
-          element: (p) =>
-            new TextElement(
-              p,
-              { x: '48%', y: '95%' },
-              {
-                text: 'benfc1993',
-                size: mainTextFontSize,
-                alignment: { h: 'left', v: 'center' },
-              }
-            ),
-          animation: fadeInAnim,
-          duration: 200,
-          simultaneous: true,
-        },
-        githubLogo: {
-          element: (p) =>
-            new ImageElement(p, { x: '45.5%', y: '95%' }, { image: 'gh' }),
+        gitHub: {
+          element: (p: p5) =>
+            new ElementGroup(p, { x: '45.5%', y: '95%' }, [
+              new ImageElement(p, { x: '0', y: 0 }, { image: 'gh' }),
+              new TextElement(
+                p,
+                { x: '2.5%', y: 0 },
+                {
+                  text: 'benfc1993',
+                  size: mainTextFontSize,
+                  alignment: { h: 'left', v: 'center' },
+                }
+              ),
+            ]),
           animation: fadeInAnim,
           duration: 200,
         },

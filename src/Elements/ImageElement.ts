@@ -74,10 +74,6 @@ export class ImageElement extends SlideElement {
     return { width, height }
   }
 
-  remove(): void {
-    console.log('remove image')
-    super.remove()
-  }
   onAnimatedIn() {}
   onAnimatedOut() {}
   onReset() {}

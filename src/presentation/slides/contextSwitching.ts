@@ -75,6 +75,11 @@ export const contextSwitching = mainSlide(
           duration: 250,
           simultaneous: true,
         },
+        secondReply: {
+          animation: fadeOutAnim,
+          duration: 250,
+          simultaneous: true,
+        },
       },
       in: {
         secondMessage: {
@@ -94,13 +99,6 @@ export const contextSwitching = mainSlide(
       },
     },
     {
-      out: {
-        secondReply: {
-          animation: fadeOutAnim,
-          duration: 250,
-          simultaneous: true,
-        },
-      },
       in: {
         finalReply: {
           element: (p: p5) =>

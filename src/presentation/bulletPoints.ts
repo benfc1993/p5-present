@@ -1,6 +1,6 @@
 import { AnimationFn } from '../Animations/types'
-import { TextElement, TextElementData } from '../Elements/TextElement'
-import { Frame, Position } from '../Slide'
+import { TextElementData, TextElement } from '../Elements/TextElement'
+import { Position, Frame } from '../Slide'
 
 export const bulletPoints = (
   listName: string,

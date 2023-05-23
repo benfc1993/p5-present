@@ -1,4 +1,7 @@
 import { fadeInAnim } from '../../Animations/fadeInAnim'
+import { ElementGroup } from '../../Elements/ElementGroup'
+import { ImageElement } from '../../Elements/ImageElement'
+import { TextElement } from '../../Elements/TextElement'
 import { bulletPoints } from '../bulletPoints'
 import { mainTextFontSize } from '../utils'
 import { mainSlide } from './templates/main'
@@ -18,10 +21,42 @@ export const sideQuests = mainSlide(
         'Check Requirements',
         '...',
       ],
-      { x: '30%', y: '45%' },
+      { x: '30%', y: '42%' },
       { size: mainTextFontSize, alignment: { h: 'left' } },
       { animation: fadeInAnim, duration: 250 }
     ),
+    ...bulletPoints(
+      'listFaded',
+      ['Allocate time', 'Set Alarms'],
+      { x: '30%', y: '93%' },
+      {
+        size: mainTextFontSize,
+        alignment: { h: 'left' },
+        color: [255, 255, 255, 127],
+      },
+      { animation: fadeInAnim, duration: 250 }
+    ),
+    {
+      in: {
+        gitHub: {
+          element: (p: p5) =>
+            new ElementGroup(p, { x: '68%', y: '95%' }, [
+              new ImageElement(p, { x: 0, y: 0 }, { image: 'gh' }),
+              new TextElement(
+                p,
+                { x: '2.5%', y: 0 },
+                {
+                  text: 'benfc1993/p5-present',
+                  size: mainTextFontSize,
+                  alignment: { h: 'left', v: 'center' },
+                }
+              ),
+            ]),
+          animation: fadeInAnim,
+          duration: 200,
+        },
+      },
+    },
   ],
   `<a href="https://pokematchup-service.onrender.com">Pokemon App</a>`
 )

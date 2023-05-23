@@ -13,7 +13,7 @@ export type TextElementData = {
   }
   size: number
   style: THE_STYLE
-  color: [number, number, number]
+  color: [number, number, number] | [number, number, number, number]
   lineHeight: 1 | 1.15 | 1.5 | 1.75 | 2
 }
 

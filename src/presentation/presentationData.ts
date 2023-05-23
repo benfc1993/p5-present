@@ -23,7 +23,7 @@ export const presentationData: PresentationData = {
     AdhdBrain,
     titleSlide('Oooh... Shiny'),
     openDocument,
-    titleSlide("Where's my dopamine"),
+    titleSlide("Where's my dopamine?"),
     elephant,
     elephantSmall,
     elephantEasy,
@@ -32,7 +32,7 @@ export const presentationData: PresentationData = {
     titleSlide('Context switching'),
     contextSwitching,
     tipsAndSuperpowers,
-    titleSlide('Sidequests'),
+    titleSlide('Side Quests'),
     sideQuests,
   ],
 }
