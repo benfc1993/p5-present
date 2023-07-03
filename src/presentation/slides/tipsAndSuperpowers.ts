@@ -24,7 +24,7 @@ export const tipsAndSuperpowers = mainSlide(
                     '-   Have a stimming toy',
                     '-   Background music',
                     '-   Keep things visible',
-                    '-    Spell checkers',
+                    '-   Spell checkers',
                   ],
                   size: mainTextFontSize,
                   lineHeight: 1.5,

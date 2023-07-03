@@ -31,8 +31,8 @@ export const presentationData: PresentationData = {
     hyperfocus,
     titleSlide('Context switching'),
     contextSwitching,
-    tipsAndSuperpowers,
     titleSlide('Side Quests'),
     sideQuests,
+    tipsAndSuperpowers,
   ],
 }

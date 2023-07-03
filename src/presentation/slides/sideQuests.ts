@@ -38,6 +38,15 @@ export const sideQuests = mainSlide(
     ),
     {
       in: {
+        qrCode: {
+          element: (p: p5) =>
+            new ImageElement(
+              p,
+              { x: '68% + 200', y: '95% + -250' },
+              { image: 'qr-code', size: { h: 400 } }
+            ),
+          simultaneous: true,
+        },
         gitHub: {
           element: (p: p5) =>
             new ElementGroup(p, { x: '68%', y: '95%' }, [
