@@ -1,6 +1,7 @@
+
 {
   "compilerOptions": {
-    "outDir": "./build",
+    "outDir": "./dist",
     "sourceMap": true,
     "strict": true,
     "noImplicitReturns": true,
@@ -14,5 +15,5 @@
     "declaration": true,
     // "emitDeclarationOnly": true
   },
-  "include": ["./src"]
+  "include": ["./src/lib"]
 }

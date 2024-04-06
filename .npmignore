@@ -1,0 +1,8 @@
+node_modules/
+src/
+*.tsconfig.json
+tsconfig.json
+.prettierrc
+pres/
+jest.config.js
+temp-build/
