@@ -1,6 +1,11 @@
 import { titleFontSize } from '../..'
-import { ElementGroup, RectElement, TitleElement } from '../../../lib'
-import { Frame, SlideData } from '../../../lib/Slide'
+import {
+  ElementGroup,
+  Frame,
+  RectElement,
+  SlideData,
+  TitleElement,
+} from '../../../lib'
 import { slideBackground } from './baseSlide'
 
 export const mainSlide = (
