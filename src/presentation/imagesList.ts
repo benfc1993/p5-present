@@ -1,9 +1,10 @@
 export const images = [
-  'code.webp',
-  'gh.png',
-  'intro-bg.jpeg',
-  'kitchen.jpg',
-  'profile.png',
-  'tasks-tangle.png',
-  'test-alpha.webp',
+"blackboard.png",
+"code.webp",
+"gh.png",
+"kitchen.jpg",
+"notebook.png",
+"qr-code.png",
+"tasks-tangle.png",
+"trello.png"
 ] as const
