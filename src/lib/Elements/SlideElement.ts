@@ -5,11 +5,14 @@ import { PixelPositionRot } from '../Animations/types'
 import { deepCopy } from '../utils/deepCopy'
 
 export class SlideElement extends Component {
-  protected _position: Position = { x: 0, y: 0 }
+  protected _position: Position = { x: 0, y: 0, rot: 0 }
   get pixelPosition(): PixelPositionRot {
-    const { x, y } = positionPercentageToPixels(this.sketch, this._position)
+    const { x, y, rot } = positionPercentageToPixels(
+      this.sketch,
+      this._position,
+    )
 
-    return { x, y, rot: this._position.rot }
+    return { x, y, rot }
   }
 
   protected _opacity: number = 1
@@ -49,7 +52,7 @@ export class SlideElement extends Component {
   }
 
   public getPosition() {
-    return this._position
+    return this.pixelPosition
   }
 
   public setPosition(pos: Position) {

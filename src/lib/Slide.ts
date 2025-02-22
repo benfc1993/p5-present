@@ -23,7 +23,9 @@ type Transition = {
 
 export interface Frame {
   in?: {
-    [elementType: string]: Transition & { element: (p: Sketch) => SlideElement }
+    [elementType: string]: Transition & {
+      element?: (p: Sketch) => SlideElement
+    }
   }
   out?: {
     [id: string]: Transition
@@ -190,8 +192,9 @@ export class Slide extends Component {
 
     if (frame.in) {
       for (const [elementId, transition] of Object.entries(frame.in)) {
-        if (!(elementId in this.elements))
+        if (!(elementId in this.elements) && transition.element)
           this.elements[elementId] = transition.element(this.sketchInstance)
+
         const element = this.elements[elementId]
 
         if (!transition.animation) {

@@ -23,7 +23,7 @@ export const positionPercentageToPixels = (
     y = position.y
   }
 
-  return { x, y }
+  return { x, y, rot: position.rot }
 }
 
 export const tryParseNum = (str: string, fallback: number) => {

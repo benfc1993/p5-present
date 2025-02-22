@@ -2,6 +2,7 @@ import {
   fadeInAnim,
   fadeOutAnim,
   ImageElement,
+  linearMoveAnim,
   RectElement,
   TextElement,
   TitleElement,
@@ -89,6 +90,11 @@ export const introSlide: SlideData = {
     },
     {
       in: {
+        childhood: {
+          animation: linearMoveAnim,
+          duration: 600,
+          endPos: { x: '90%', y: '10%', rot: 16 },
+        },
         doctor: {
           element: (p) =>
             new TextElement(

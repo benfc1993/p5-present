@@ -3,9 +3,11 @@
   "version": "1.0.0",
   "main": "dist/index.js",
   "scripts": {
+    "dev": "npm run pre-build && concurrently \"esbuild src/presentation/index.ts --watch --bundle --outdir=./dist\" \"npx live-server dist\"",
+    "pre-build": "rm -rf dist && mkdir dist && cp -r public/* dist ",
     "build": "rm -rf build && esbuild src/presentation/index.ts  --bundle --outdir=build --minify && cp -r public/* build/",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "ENVIRONMENT=PROD yarn build && http-server ./build -p 8000",
+    "start": "ENVIRONMENT=PROD yarn build && npx http-server ./build -p 8000",
     "create-package": "rm -rf dist && tsc -p tsconfig.build.json"
   },
   "keywords": [
@@ -27,6 +29,7 @@
   "devDependencies": {
     "@types/node": "^18.14.6",
     "@types/p5": "^1.7.6",
+    "concurrently": "^9.1.2",
     "esbuild": "^0.20.1",
     "esbuild-plugin-d.ts": "^1.2.3",
     "p5": "^1.9.1",
