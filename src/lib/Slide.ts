@@ -4,6 +4,7 @@ import { SlideElement } from './Elements/SlideElement'
 import { positionPercentageToPixels } from './utils/positionPercentageToPixel'
 import { ElementGroup } from './Elements/ElementGroup'
 import { presentationOptions } from '.'
+import { doTransition } from './transition'
 
 export type Position = { x: number | string; y: number | string; rot?: number }
 
@@ -13,7 +14,7 @@ export type SlideData = {
   frames: Frame[]
 }
 
-type Transition = {
+export type Transition = {
   animation?: AnimationFn
   startPos?: Position
   endPos?: Position
@@ -114,79 +115,14 @@ export class Slide extends Component {
         const element = this.elements[elementId]
         if (!transition.animation) {
           element.setPosition(transition.endPos || element.getPosition())
-          element.onAnimatedIn()
+          element.onAnimatedOut()
+          element.onDestroy()
         } else {
-          if (transition.simultaneous) {
-            if (element instanceof ElementGroup) {
-              element.elements.forEach((groupElement) =>
-                transition.animation?.(
-                  groupElement,
-                  positionPercentageToPixels(
-                    this.sketch,
-                    transition.startPos || groupElement.getPosition(),
-                  ),
-                  positionPercentageToPixels(
-                    this.sketch,
-                    transition.endPos || groupElement.getPosition(),
-                  ),
-                  transition.duration || 0,
-                  transition.startPos || groupElement.getPosition(),
-                ),
-              )
-            } else {
-              transition.animation(
-                element,
-                positionPercentageToPixels(
-                  this.sketch,
-                  transition.startPos || element.getPosition(),
-                ),
-                positionPercentageToPixels(
-                  this.sketch,
-                  transition.endPos || element.getPosition(),
-                ),
-                transition.duration || 0,
-                transition.startPos || element.getPosition(),
-              )
-            }
-          } else {
-            if (element instanceof ElementGroup) {
-              await Promise.all(
-                element.elements.map((groupElement) =>
-                  transition.animation?.(
-                    groupElement,
-                    positionPercentageToPixels(
-                      this.sketch,
-                      transition.startPos || groupElement.getPosition(),
-                    ),
-                    positionPercentageToPixels(
-                      this.sketch,
-                      transition.endPos || groupElement.getPosition(),
-                    ),
-                    transition.duration || 0,
-                    transition.startPos || groupElement.getPosition(),
-                  ),
-                ),
-              )
-            } else {
-              await transition.animation(
-                element,
-                positionPercentageToPixels(
-                  this.sketch,
-                  transition.startPos || element.getPosition(),
-                ),
-                positionPercentageToPixels(
-                  this.sketch,
-                  transition.endPos || element.getPosition(),
-                ),
-                transition.duration || 0,
-                transition.startPos || element.getPosition(),
-              )
-            }
-          }
+          await doTransition(this.sketch, transition, element, () => {
+            element.onAnimatedOut()
+            element.onDestroy()
+          })
         }
-
-        element.onAnimatedOut()
-        element.onDestroy()
       }
     }
 
@@ -201,73 +137,7 @@ export class Slide extends Component {
           element.setPosition(transition.endPos || element.getPosition())
           element.onAnimatedOut()
         } else {
-          if (transition.simultaneous) {
-            if (element instanceof ElementGroup) {
-              element.elements.map((groupElement) =>
-                transition.animation?.(
-                  groupElement,
-                  positionPercentageToPixels(
-                    this.sketch,
-                    transition.startPos || groupElement.getPosition(),
-                  ),
-                  positionPercentageToPixels(
-                    this.sketch,
-                    transition.endPos || groupElement.getPosition(),
-                  ),
-                  transition.duration || 0,
-                  transition.endPos || groupElement.getPosition(),
-                ),
-              )
-            } else {
-              transition.animation(
-                element,
-                positionPercentageToPixels(
-                  this.sketch,
-                  transition.startPos || element.getPosition(),
-                ),
-                positionPercentageToPixels(
-                  this.sketch,
-                  transition.endPos || element.getPosition(),
-                ),
-                transition.duration || 0,
-                transition.endPos || element.getPosition(),
-              )
-            }
-          } else {
-            if (element instanceof ElementGroup) {
-              await Promise.all(
-                element.elements.map((groupElement) =>
-                  transition.animation?.(
-                    groupElement,
-                    positionPercentageToPixels(
-                      this.sketch,
-                      transition.startPos || groupElement.getPosition(),
-                    ),
-                    positionPercentageToPixels(
-                      this.sketch,
-                      transition.endPos || groupElement.getPosition(),
-                    ),
-                    transition.duration || 0,
-                    transition.endPos || groupElement.getPosition(),
-                  ),
-                ),
-              )
-            } else {
-              await transition.animation(
-                element,
-                positionPercentageToPixels(
-                  this.sketch,
-                  transition.startPos || element.getPosition(),
-                ),
-                positionPercentageToPixels(
-                  this.sketch,
-                  transition.endPos || element.getPosition(),
-                ),
-                transition.duration || 0,
-                transition.endPos || element.getPosition(),
-              )
-            }
-          }
+          await doTransition(this.sketch, transition, element)
         }
         element.onAnimatedIn()
       }
@@ -284,7 +154,7 @@ export class Slide extends Component {
       }
     if (prevFrame.in)
       for (const [elementId, _transition] of Object.entries(prevFrame.in)) {
-        this.elements[elementId].remove()
+        this.elements[elementId].onDestroy()
         delete this.elements[elementId]
       }
 

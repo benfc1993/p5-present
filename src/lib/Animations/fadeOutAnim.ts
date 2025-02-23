@@ -1,26 +1,37 @@
 import { SlideElement } from '../Elements/SlideElement'
 import { Position } from '../Slide'
 import { AnimationFn, PixelPositionRot } from './types'
+import { easeInOut, lerp } from './utils'
 
 export const fadeOutAnim: AnimationFn = (
   el: SlideElement,
-  startPos: PixelPositionRot,
-  endPixelPos: PixelPositionRot,
+  _startPos: PixelPositionRot,
+  _endPixelPos: PixelPositionRot,
   duration: number,
-  endPos: Position,
+  _endPos: Position,
 ) => {
   return new Promise((resolve) => {
-    el.setPosition(endPos)
-    const int = setInterval(() => {
-      let opacity = el.opacity()
-      opacity -= (1 / duration) * (1000 / 60)
-      if (opacity <= 0) opacity = 0
-      el.setOpacity(opacity)
-    }, 1000 / 60)
+    let t = 0
+    let prevTime = 0
+    let id = -1
+
+    function step(ts: number = 0) {
+      const deltaTime = prevTime === 0 ? 0 : Math.max(0, ts - prevTime)
+      prevTime = ts
+      t += deltaTime / duration
+      if (t >= 1) return
+      id = requestAnimationFrame(step)
+      el.setOpacity(1)
+
+      el.setOpacity(lerp(1, 0, easeInOut(t)))
+    }
+
+    step()
 
     setTimeout(() => {
-      clearInterval(int)
       el.setOpacity(0)
+      cancelAnimationFrame(id)
+      t = 1
       return resolve()
     }, duration)
   })

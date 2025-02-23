@@ -5,11 +5,22 @@ import { PixelPositionRot } from '../Animations/types'
 import { deepCopy } from '../utils/deepCopy'
 
 export class SlideElement extends Component {
+  protected _removed: boolean = false
   protected _position: Position = { x: 0, y: 0, rot: 0 }
+  protected _localPosition: Position = { x: 0, y: 0, rot: 0 }
   get pixelPosition(): PixelPositionRot {
     const { x, y, rot } = positionPercentageToPixels(
       this.sketch,
       this._position,
+    )
+
+    return { x, y, rot }
+  }
+
+  get pixelLocalPosition(): PixelPositionRot {
+    const { x, y, rot } = positionPercentageToPixels(
+      this.sketch,
+      this._localPosition,
     )
 
     return { x, y, rot }
@@ -25,6 +36,7 @@ export class SlideElement extends Component {
   constructor(p: Sketch, position: Position) {
     super(p)
     this._position = position
+    this._localPosition = position
     this.sketchInstance = p
   }
 
@@ -44,6 +56,7 @@ export class SlideElement extends Component {
   }
 
   onAnimatedIn() {
+    this._removed = false
     this.addState()
   }
 
@@ -57,6 +70,10 @@ export class SlideElement extends Component {
 
   public setPosition(pos: Position) {
     this._position = pos
+  }
+
+  public setLocalPosition(pos: Position) {
+    this._localPosition = pos
   }
 
   public opacity() {
@@ -92,7 +109,7 @@ export class SlideElement extends Component {
     }
   }
 
-  remove() {
-    this.onDestroy()
+  onDestroy() {
+    this._removed = true
   }
 }

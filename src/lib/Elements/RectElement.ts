@@ -8,7 +8,9 @@ type RectElementData = {
     w: string | number
     h: string | number
   }
-  color: number[]
+  color?: number[]
+  stroke?: number[]
+  strokeWeight?: number
   radius?: number | [number, number] | [number, number, number, number]
 }
 
@@ -16,21 +18,32 @@ export class RectElement extends SlideElement {
   private data: RectElementData
   alpha: number = 1
   radius: [number, number, number, number]
+  color: number[] = [255, 255, 255, 0]
+  stroke: number[] | null = null
+  strokeWeight: number = 1
 
   constructor(p: Sketch, position: Position, data: RectElementData) {
     super(p, position)
     this.data = data
-    this.alpha = data.color[3] / 255 || 1
+    if (data.color) this.color = data.color
+    if (data.stroke) this.stroke = data.stroke
+    if (data.strokeWeight) this.strokeWeight = data.strokeWeight
+    this.alpha = data?.color ? (data.color?.[3] ?? 255) / 255 : 0
     this.radius = this.setRadius(data.radius)
     this.addState()
   }
 
   draw() {
     this.drawElement(() => {
-      this.sketch.push()
-      this.data.color[3] = this._opacity * this.alpha * 255
+      this.color[3] = 255 * this.alpha * this._opacity
       this.sketch.noStroke()
-      this.sketch.fill(this.data.color)
+
+      if (this.stroke) {
+        this.sketch.strokeWeight(this.strokeWeight)
+        this.sketch.stroke(this.stroke)
+      }
+
+      this.sketch.fill(this.color)
       this.sketch.rectMode('center')
       const { x, y } = positionPercentageToPixels(this.sketch, {
         x: this.data.size.w,
@@ -43,7 +56,6 @@ export class RectElement extends SlideElement {
         y,
         ...this.radius,
       )
-      this.sketch.pop()
     })
   }
 

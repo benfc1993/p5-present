@@ -1,8 +1,9 @@
 import { Position } from '../Slide'
 import { SlideElement } from './SlideElement'
 import { HORIZ_ALIGN, THE_STYLE, VERT_ALIGN } from 'p5'
-import { Sketch } from 'p5-typescript'
+import { ExtendedP5, Sketch } from 'p5-typescript'
 import { presentationOptions } from '..'
+import { hex } from '../utils/hex'
 
 export type TextElementData = {
   text: string | string[]
@@ -39,9 +40,13 @@ export class TextElement extends SlideElement {
     }
     super(p, position)
     this.data = defaultData
-    Object.entries(data).forEach(([key, value]) =>
-      Object.assign(this.data, { [key]: value }),
-    )
+    Object.entries(data).forEach(([key, value]) => {
+      if (key === 'text' && typeof value === 'string' && value.includes('\n')) {
+        this.data.text = value.split('\n')
+        return
+      }
+      Object.assign(this.data, { [key]: value })
+    })
   }
 
   onReset(): void {
@@ -65,6 +70,7 @@ export class TextElement extends SlideElement {
   }
 
   draw(): void {
+    if (this._removed) return
     this.drawElement(() => {
       this.sketch.push()
       if (presentationOptions.fonts[this.data.font])
@@ -76,27 +82,76 @@ export class TextElement extends SlideElement {
         this.data.alignment?.v || 'bottom',
       )
       this.sketch.textSize(this.data.size)
+
       this.sketch.textStyle(this.data.style)
       if (this.data.text instanceof Array) {
-        this.data.text.forEach((line, idx) =>
-          this.sketch.text(
+        const textLineHight = this.data.size * this.data.lineHeight * 1.5
+        const yOffset =
+          this.data.alignment.v === 'center'
+            ? (-this.data.text.length * textLineHight) / 2
+            : 0
+        this.data.text.forEach((line, idx) => {
+          drawText(
             line,
+            this.data.color,
+            this._opacity,
+
             this.pixelPosition.x,
 
-            this.pixelPosition.y +
-              idx * (this.data.size * this.data.lineHeight + 20),
-          ),
-        )
+            this.pixelPosition.y + idx * textLineHight + yOffset,
+            this.sketch,
+          )
+        })
       } else {
-        this.sketch.text(
+        drawText(
           this.data.text,
+          this.data.color,
+          this._opacity,
           this.pixelPosition.x,
           this.pixelPosition.y,
+
+          this.sketch,
         )
       }
       this.sketch.pop()
     })
   }
+}
+
+function drawText(
+  str: string,
+  defaultColor: [number, number, number],
+  opacity: number,
+  x: number,
+  y: number,
+  sketch: ExtendedP5,
+) {
+  const arr = str.split('[*').flatMap((sub) => sub.split('*]'))
+  let offset = 0
+  arr.forEach((line) => {
+    if (line.slice(1).startsWith('#')) {
+      sketch.fill([...hex(line.slice(1, -1)), 255 * opacity])
+      return
+    }
+
+    if (line.match(/^\(\d+,\d+,\d+\)$/)) {
+      sketch.fill([
+        ...(line
+          .slice(1, -1)
+          .split(',')
+          .map((s) => parseInt(s)) as [number, number, number]),
+        255 * opacity,
+      ])
+      return
+    }
+
+    if (line === '0r') {
+      sketch.fill([...defaultColor, 255 * opacity])
+      return
+    }
+    sketch.text(line, x + offset, y)
+    offset += sketch.textWidth(line)
+  })
 }
 
 export class TitleElement extends TextElement {

@@ -1,6 +1,7 @@
 import { AnimationFn, PixelPositionRot } from './types'
 import { SlideElement } from '../Elements/SlideElement'
 import { Position } from '../Slide'
+import { lerp, easeInOut } from './utils'
 
 export const linearMoveAnim: AnimationFn = async (
   el: SlideElement,
@@ -13,7 +14,6 @@ export const linearMoveAnim: AnimationFn = async (
     let t = 0
     let prevTime = 0
     let id = -1
-    console.log(el)
     const startRot = startPos.rot ? startPos.rot : 0
     const endRot = endPixelPos.rot ? endPixelPos.rot : (startPos.rot ?? 0)
 
@@ -37,17 +37,8 @@ export const linearMoveAnim: AnimationFn = async (
     setTimeout(() => {
       el.setPosition(endPos)
       cancelAnimationFrame(id)
-      console.log(endPos)
       t = 1
       return resolve()
     }, duration)
   })
-}
-
-function lerp(a: number, b: number, t: number) {
-  return a + (b - a) * t
-}
-
-function easeInOut(t: number) {
-  return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2
 }

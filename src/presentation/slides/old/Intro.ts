@@ -6,9 +6,9 @@ import {
   RectElement,
   TextElement,
   TitleElement,
-} from '../../lib'
-import { mainTextFontSize, titleFontSize } from '..'
-import { SlideData } from '../../lib/Slide'
+} from '../../../lib'
+import { mainTextFontSize, titleFontSize } from '../..'
+import { SlideData } from '../../../lib/Slide'
 
 export const introSlide: SlideData = {
   title: 'Introduction',

@@ -1,14 +1,11 @@
-import { AdhdBrain } from './slides/AdhdBrain'
-import { coverSlide } from './slides/Cover'
-import { introSlide } from './slides/Intro'
-import { elephant } from './slides/elephant'
-import { elephantEasy } from './slides/elephantEasy'
-import { elephantSmall } from './slides/elephantSmall'
-import { hyperfocus } from './slides/hyperfocus'
-import { titleSlide } from './slides/templates/title'
 import { fonts } from './fontsList'
 import { images } from './imagesList'
 import { PresentationData, startPresentation } from '../lib'
+import { createElement } from './slides/CreateElement'
+import { Component } from './slides/Component'
+import { createElementWithChildren } from './slides/CreateElementChildren'
+import { createComponent } from './slides/CreateComponent'
+import { hooks } from './slides/hooks'
 
 export const presentationData: PresentationData<typeof fonts, typeof images> = {
   titleFont: 'oswald-regular.ttf',
@@ -18,20 +15,12 @@ export const presentationData: PresentationData<typeof fonts, typeof images> = {
   fonts,
   images,
   slides: [
-    coverSlide,
-    introSlide,
-    AdhdBrain,
-    titleSlide('Ooh Shiny'),
-    //openDocment,
-    titleSlide("Where's my dopamine"),
-    elephant,
-    elephantSmall,
-    elephantEasy,
-    titleSlide('Hyperfocus'),
-    hyperfocus,
-    titleSlide('Context switching'),
-    //contextSwitching,
-    titleSlide('Sidequests'),
+    // coverSlide,
+    createElement,
+    createElementWithChildren,
+    // Component,
+    createComponent,
+    hooks,
   ],
 }
 export const { titleFontSize, mainTextFontSize, textFont, titleFont } =

@@ -19,17 +19,15 @@ export class ElementGroup extends SlideElement {
   draw(): void {
     this.drawElement(() => {
       this.elements.map((element) => {
-        const currentPos = element.getPosition()
         this.positionElement(element)
         element.draw()
-        element.setPosition(currentPos)
       })
     })
   }
 
   positionElement(element: SlideElement) {
     const { x, y } = this.pixelPosition
-    const { x: elX, y: elY } = element.pixelPosition
+    const { x: elX, y: elY } = element.pixelLocalPosition
     element.setPosition({
       x: x + elX,
       y: y + elY,
