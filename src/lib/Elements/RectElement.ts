@@ -39,6 +39,7 @@ export class RectElement extends SlideElement {
       this.sketch.noStroke()
 
       if (this.stroke) {
+        this.stroke[3] = 255 * this.alpha * this._opacity
         this.sketch.strokeWeight(this.strokeWeight)
         this.sketch.stroke(this.stroke)
       }

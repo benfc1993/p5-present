@@ -20,6 +20,7 @@ export class ElementGroup extends SlideElement {
     this.drawElement(() => {
       this.elements.map((element) => {
         this.positionElement(element)
+        element.setOpacity(this._opacity)
         element.draw()
       })
     })

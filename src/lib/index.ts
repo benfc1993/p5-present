@@ -12,6 +12,7 @@ class PresentationOptions
   titleFont: Lowercase<string> = ''
   titleFontSize: number = 0
   textFont: Lowercase<string> = ''
+  textColor: [number, number, number] = [255, 255, 255]
   mainTextFontSize: number = 0
   fonts: Record<string, p5.Font> = {}
   images: Record<string, p5.Image> = {}
@@ -21,6 +22,7 @@ class PresentationOptions
     this.mainTextFontSize = presentationData.mainTextFontSize
     this.titleFont = presentationData.titleFont
     this.titleFontSize = presentationData.titleFontSize
+    this.textColor = presentationData.textColor ?? this.textColor
   }
 
   public setFonts(fonts: Record<string, p5.Font>): void {
@@ -39,6 +41,7 @@ export type PresentationData<
   titleFont: Lowercase<TFonts[number]>
   titleFontSize: number
   textFont: Lowercase<TFonts[number]>
+  textColor?: [number, number, number]
   mainTextFontSize: number
   fonts?: TFonts
   images?: TImages

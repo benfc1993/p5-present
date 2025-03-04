@@ -34,7 +34,7 @@ export class TextElement extends SlideElement {
       },
       size: presentationOptions.mainTextFontSize,
       style: 'normal',
-      color: [225, 225, 225],
+      color: presentationOptions.textColor,
       lineHeight: 1.15,
       font: presentationOptions.textFont,
     }

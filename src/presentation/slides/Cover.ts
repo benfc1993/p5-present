@@ -1,11 +1,11 @@
 import { fadeOutAnim, TextElement, TitleElement } from '../../lib'
 import { mainTextFontSize, titleFontSize } from '..'
-import { slideBackground } from './templates/baseSlide'
 import { SlideData } from '../../lib/Slide'
+import { colors } from '../fontsList'
 
 export const coverSlide: SlideData = {
   title: 'First slide',
-  background: slideBackground,
+  background: colors.bg,
   frames: [
     {
       in: {
@@ -15,7 +15,7 @@ export const coverSlide: SlideData = {
               p,
               { x: '50%', y: '50% + -60' },
               {
-                text: 'Alarms, diagrams, side-quests',
+                text: 'React',
                 alignment: { h: 'center', v: 'center' },
                 size: titleFontSize,
               },
@@ -41,7 +41,7 @@ export const coverSlide: SlideData = {
               p,
               { x: '50%', y: '50% + 106' },
               {
-                text: 'and other lessons from having ADHD in tech',
+                text: 'Behind the curtain',
                 alignment: { h: 'center', v: 'center' },
                 size: mainTextFontSize,
               },

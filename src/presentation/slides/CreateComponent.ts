@@ -9,7 +9,7 @@ import {
 } from '../../lib'
 import { LineElement } from '../../lib/Elements/LineElement'
 import { colors } from '../fontsList'
-import { func, highlight, prop, string, tag } from './templates/textColoring'
+import { func, key, keyword, string, tag } from './templates/textColoring'
 
 export const createComponent: SlideData = {
   title: 'Create Element Children',
@@ -55,8 +55,8 @@ export const createComponent: SlideData = {
                 color: colors.white,
                 size: 30,
                 text: `
-${highlight('function', '#fff')} ${func('MyComponent')} () {
-    ${highlight('return', colors.purple)} (
+${keyword('function')} ${func('MyComponent')} ( ) {
+    ${keyword('return')} (
         <${tag('div')}>
             <${tag('p')}>${string('Current count: 0')}</${tag('p')}>
             <${tag('button')}>${string('Increment')}</${tag('button')}>
@@ -127,12 +127,12 @@ ${highlight('function', '#fff')} ${func('MyComponent')} () {
                 alignment: { v: 'center' },
                 text: `
 {
-    tag: ${func('MyComponent')},
-    isComponent: ${func('true')},
-    _ref: #document.div,
-    child: {
-        tag: "${tag('div')}",
-        _ref: #document.div,
+    ${key('tag')}: ${func('MyComponent')},
+    ${key('isComponent')}: ${func('true')},
+    ${key('_ref')}: #document.div,
+    ${key('child')}: {
+        ${key('tag')}: "${tag('div')}",
+        ${key('_ref')}: #document.div,
         ...
     } 
 }`,

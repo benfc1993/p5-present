@@ -1,8 +1,6 @@
 import { Component, Sketch } from 'p5-typescript'
 import { AnimationFn } from './Animations/types'
 import { SlideElement } from './Elements/SlideElement'
-import { positionPercentageToPixels } from './utils/positionPercentageToPixel'
-import { ElementGroup } from './Elements/ElementGroup'
 import { presentationOptions } from '.'
 import { doTransition } from './transition'
 
@@ -31,6 +29,8 @@ export interface Frame {
   out?: {
     [id: string]: Transition
   }
+  onEnter?: () => void
+  onExit?: () => void
 }
 
 type Elements = Record<string, SlideElement>
@@ -110,6 +110,8 @@ export class Slide extends Component {
   async drawFrame() {
     const frame = this.frames[this.currentFrame]
 
+    frame?.onEnter?.()
+
     if (frame.out) {
       for (const [elementId, transition] of Object.entries(frame.out)) {
         const element = this.elements[elementId]
@@ -142,6 +144,8 @@ export class Slide extends Component {
         element.onAnimatedIn()
       }
     }
+
+    frame?.onExit?.()
   }
 
   revertFrame() {

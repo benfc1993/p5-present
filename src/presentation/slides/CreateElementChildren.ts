@@ -8,14 +8,7 @@ import {
 } from '../../lib'
 import { LineElement } from '../../lib/Elements/LineElement'
 import { colors } from '../fontsList'
-import {
-  func,
-  highlight,
-  hook,
-  prop,
-  string,
-  tag,
-} from './templates/textColoring'
+import { func, hook, key, prop, string, tag } from './templates/textColoring'
 
 export const createElementWithChildren: SlideData = {
   title: 'Create Element Children',
@@ -36,7 +29,7 @@ export const createElementWithChildren: SlideData = {
                 text: `
         <${tag('div')}>
             <${tag('p')}>${string('Current count: 0')}</${tag('p')}>
-            <${tag('button')} ${prop('onClick')}={myFunc}>
+            <${tag('button')} ${prop('onClick')}={${func('myFunc')}}>
                 ${string('Increment')}
             </${tag('button')}>
         </${tag('div')}>
@@ -104,29 +97,29 @@ export const createElementWithChildren: SlideData = {
                 lineHeight: 1,
                 text: `
 {
-    tag: "${tag('div')}",
-    _ref: #document.div,
-    child: {
-        tag: "${tag('p')}",
-        ref: #document.p,
-        child: {
-            tag: "TEXT",
-            _ref: #document.text,
-            props: {
-                value: "${string('Current count: 0')}"
+    ${key('tag')}: "${tag('div')}",
+    ${key('_ref')}: #document.div,
+    ${key('child')}: {
+        ${key('tag')}: "${tag('p')}",
+        ${key('ref')}: #document.p,
+        ${key('child')}: {
+            ${key('tag')}: "TEXT",
+            ${key('_ref')}: #document.text,
+            ${key('props')}: {
+                ${key('value')}: "${string('Current count')}: 0')}"
             }
         },
-        sibling: {
-            tag: "${tag('button')}",
-            _ref: #document.button,
-            ${highlight('props', '#fff')}: {
-                ${prop('onClick')}: myFunc
+        ${key('sibling')}: {
+            ${key('tag')}: "${tag('button')}",
+            ${key('_ref')}: #document.button,
+            ${key('props')}: {
+                ${prop('onClick')}')}: myFunc
             },
-            child: {
-                tag: "TEXT",
-                _ref: #document.text,
-                props: {
-                    value: "${string('Increment')}"
+            ${key('child')}: {
+                ${key('tag')}: "TEXT",
+                ${key('_ref')}: #document.text,
+                ${key('props')}: {
+                    ${key('value')}: "${string('Increment')}"
                 }
             }
         }

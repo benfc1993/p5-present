@@ -19,7 +19,7 @@ export const colors = {
     return hex('#33bbf9')
   },
   get purple() {
-    return hex('#77209f')
+    return hex('#8b39b5')
   },
   get bg() {
     return hex('#0e1a24')
