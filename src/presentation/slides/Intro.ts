@@ -1,7 +1,14 @@
-import { fadeOutAnim, TitleElement } from '../../lib'
+import {
+  fadeInAnim,
+  fadeOutAnim,
+  ImageElement,
+  TextElement,
+  TitleElement,
+} from '../../lib'
 import { titleFontSize } from '..'
 import { SlideData } from '../../lib/Slide'
 import { colors } from '../fontsList'
+import { prop, string, tag } from './templates/textColoring'
 
 export const intro: SlideData = {
   title: 'First slide',
@@ -24,8 +31,15 @@ export const intro: SlideData = {
         },
       },
     },
-
     {
+      in: {
+        browser: {
+          element: (p) =>
+            new ImageElement(p, { x: '50%', y: '50%' }, { image: 'browser' }),
+          animation: fadeInAnim,
+          duration: 200,
+        },
+      },
       out: {
         title: {
           animation: fadeOutAnim,

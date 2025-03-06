@@ -28,6 +28,46 @@ let pNode: RectElement
 let textNode: RectElement
 let btnNode: RectElement
 
+const appTree = [
+  // level - 0
+  [
+    //branch - 0
+    [{ x: 0, label: 'main' }],
+  ],
+  //level-1
+  [
+    // branch - 0
+    [{ x: -1.5, color: colors.green }],
+    //branch - 1
+    [{ x: 1.5, label: 'div' }],
+  ],
+  // level - 2
+  [
+    // branch - 0
+    [{ x: -1.5, label: 'div' }],
+    // branch - 1
+    [
+      { x: 0.75, label: 'h1' },
+      { x: 2.25, label: 'span' },
+    ],
+  ],
+  // level - 3
+  [
+    // branch - 0
+    [
+      { x: -2.25, label: 'p' },
+      { x: -0.75, label: 'btn' },
+    ],
+    // branch - 1
+    [null, { x: 2.25, label: 'a' }],
+  ],
+  // level - 3
+  [
+    // branch - 0
+    [{ x: -2.25, label: 'TEXT', color: colors.purple }],
+  ],
+]
+
 export const rerenderComponent: SlideData = {
   title: 'Create Element Children',
   background: colors.bg,
@@ -148,7 +188,7 @@ ${keyword('function')} ${func('MyComponent')} () {
 {
     ${key('tag')}: ${func('MyComponent')},
     ${key('isComponent')}: ${func('true')},
-    ${key('_ref')}: #document.div,
+    ${key('_ref')}: ${variable('#document')}.${key('div')},
     ${key('key')}: "1234-5678-9012",
     ${key('hooks')}: [
         ${hook('{')}
@@ -157,26 +197,26 @@ ${keyword('function')} ${func('MyComponent')} () {
     ],
     ${key('child')}: {
         ${key('tag')}: "${tag('div')}",
-        ${key('_ref')}: #document.div,
+        ${key('_ref')}: ${variable('#document')}.${key('div')},
         ${key('child')}: {
             ${key('tag')}: "${tag('p')}",
-            ${key('ref')}: #document.p,
+            ${key('ref')}: ${variable('#document')}.${key('p')},
             ${key('child')}: {
-                ${key('tag')}: "TEXT",
-                ${key('_ref')}: #document.text,
+                ${key('tag')}: "${tag('TEXT')}",
+                ${key('_ref')}: ${variable('#document')}.${key('text')},
                 ${key('props')}: {
                     ${key('value')}: "${string('Current count: 0')}"
                 }
             },
             ${key('sibling')}: {
                 ${key('tag')}: "${tag('button')}",
-                ${key('_ref')}: #document.button,
+                ${key('_ref')}: ${variable('#document')}.${key('button')},
                 ${key('props')}: {
                     ${prop('onClick')}: setCount
                 },
                 ${key('child')}: {
-                    ${key('tag')}: "TEXT",
-                    ${key('_ref')}: #document.text,
+                    ${key('tag')}: "${tag('TEXT')}",
+                    ${key('_ref')}: ${variable('#document')}.${key('text')},
                     ${key('props')}: {
                         ${key('value')}: "${string('Increment')}"
 `,
@@ -736,7 +776,11 @@ ${keyword('function')} ${func('MyComponent')} () {
           animation: fadeInAnim,
           duration: 300,
           element: (p) =>
-            new ElementGroup(p, { x: '75%', y: '25%' }, createTree(p, 200, 90)),
+            new ElementGroup(
+              p,
+              { x: '75%', y: '25%' },
+              createTree(p, appTree, 150, 60),
+            ),
         },
       },
     },

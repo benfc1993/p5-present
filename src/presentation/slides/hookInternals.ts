@@ -108,7 +108,7 @@ ${string('}')}`,
       {
         size: 26,
         text: [
-          `function useHook() {
+          `${keyword('function')} ${func('useHook')}( ) {
     ${keyword('const')} ${variable('hookIndex')} = ${variable('globalState')}.${key('hookIndex')}
     ${keyword('const')} ${variable('componentKey')} = ${variable('globalState')}.${key('componentKey')}
     ${variable('globalState')}.${key('hookIndex++')}`,

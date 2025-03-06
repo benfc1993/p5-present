@@ -8,7 +8,15 @@ import {
 } from '../../lib'
 import { LineElement } from '../../lib/Elements/LineElement'
 import { colors } from '../fontsList'
-import { func, hook, key, prop, string, tag } from './templates/textColoring'
+import {
+  func,
+  hook,
+  key,
+  prop,
+  string,
+  tag,
+  variable,
+} from './templates/textColoring'
 
 export const createElementWithChildren: SlideData = {
   title: 'Create Element Children',
@@ -46,7 +54,7 @@ export const createElementWithChildren: SlideData = {
         componentWithChildrenJsx: {
           animation: linearMoveAnim,
           duration: 250,
-          endPos: { x: 100, y: '50%' },
+          endPos: { x: '15%', y: '50%' },
         },
         jsxHeader: {
           element(p) {
@@ -98,26 +106,26 @@ export const createElementWithChildren: SlideData = {
                 text: `
 {
     ${key('tag')}: "${tag('div')}",
-    ${key('_ref')}: #document.div,
+    ${key('_ref')}: ${variable('#document')}.${key('div')},
     ${key('child')}: {
         ${key('tag')}: "${tag('p')}",
-        ${key('ref')}: #document.p,
+        ${key('ref')}: ${variable('#document')}.${key('p')},
         ${key('child')}: {
-            ${key('tag')}: "TEXT",
-            ${key('_ref')}: #document.text,
+            ${key('tag')}: "${tag('TEXT')}",
+            ${key('_ref')}: ${variable('#document')}.${key('text')},
             ${key('props')}: {
-                ${key('value')}: "${string('Current count')}: 0')}"
+                ${key('value')}: "${string('Current count: 0')}"
             }
         },
         ${key('sibling')}: {
             ${key('tag')}: "${tag('button')}",
-            ${key('_ref')}: #document.button,
+            ${key('_ref')}: ${variable('#document')}.${key('button')},
             ${key('props')}: {
                 ${prop('onClick')}')}: myFunc
             },
             ${key('child')}: {
-                ${key('tag')}: "TEXT",
-                ${key('_ref')}: #document.text,
+                ${key('tag')}: "${tag('TEXT')}",
+                ${key('_ref')}: ${variable('#document')}.${key('text')},
                 ${key('props')}: {
                     ${key('value')}: "${string('Increment')}"
                 }

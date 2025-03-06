@@ -6,7 +6,7 @@ import {
   TextElement,
 } from '../../lib'
 import { colors } from '../fontsList'
-import { key, prop, string, tag } from './templates/textColoring'
+import { key, prop, string, tag, variable } from './templates/textColoring'
 
 export const createElement: SlideData = {
   title: 'Create Element',
@@ -40,7 +40,7 @@ export const createElement: SlideData = {
         tag: {
           animation: linearMoveAnim,
           duration: 250,
-          endPos: { x: 100, y: '50%' },
+          endPos: { x: '15%', y: '50%' },
         },
         jsxHeader: {
           element(p) {
@@ -92,13 +92,13 @@ export const createElement: SlideData = {
                 text: `
 {
     ${key('tag')}: "${tag('p')}",
-    ${key('_ref')}: #document.p,
+    ${key('_ref')}: ${variable('#document')}.${key('p')},
     ${key('props')}: {
         ${prop('className')}: "my-class"
     },
     ${key('child')}: {
-        ${key('tag')}: "TEXT",
-        ${key('_ref')}: #document.text,
+        ${key('tag')}: "${tag('TEXT')}",
+        ${key('_ref')}: ${variable('#document')}.${key('text')},
         ${key('props')}: {
             ${key('value')}: "${string('Hello World')}"
         }

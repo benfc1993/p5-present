@@ -144,9 +144,9 @@ ${keyword('function')} ${func('MyComponent')} ( ) {
                 alignment: { v: 'center' },
                 text: `
 {
-    ${key('tag')}: MyComponent,
-    ${key('isComponent')}: true,
-    ${key('_ref')}: #document.div,
+    ${key('tag')}: ${func('MyComponent')},
+    ${key('isComponent')}: ${variable('true')},
+    ${key('_ref')}: ${variable('#document')}.${key('div')},
     ${key('hooks')}: [
         ${hook('{')}
             ${key('value')}: ${tag('0')},
